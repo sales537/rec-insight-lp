@@ -45,15 +45,17 @@
   --navy-mid: #0f1629;
   --blue: #3b82f6;
   --blue-dark: #2563eb;
+  --blue-light: #60a5fa;
   --blue-glow: rgba(59, 130, 246, 0.3);
-  --teal: #14b8a6;
-  --teal-glow: rgba(20, 184, 166, 0.3);
-  --purple: #8b5cf6;
-  --purple-glow: rgba(139, 92, 246, 0.3);
-  --amber: #f59e0b;
-  --amber-glow: rgba(245, 158, 11, 0.3);
-  --green: #10b981;
-  --coral: #ef4444;
+  /* All accent colors mapped to blue family */
+  --teal: #3b82f6;
+  --teal-glow: rgba(59, 130, 246, 0.3);
+  --purple: #3b82f6;
+  --purple-glow: rgba(59, 130, 246, 0.3);
+  --amber: #3b82f6;
+  --amber-glow: rgba(59, 130, 246, 0.3);
+  --green: #3b82f6;
+  --coral: #3b82f6;
   --gray-900: #111827;
   --gray-700: #374151;
   --gray-600: #4b5563;
@@ -62,10 +64,10 @@
   --gray-200: #e5e7eb;
   --gray-100: #f3f4f6;
   --gray-50: #f9fafb;
-  --teal-50: #f0fdfa;
-  --amber-50: #fffbeb;
+  --teal-50: #eff6ff;
+  --amber-50: #eff6ff;
   --blue-50: #eff6ff;
-  --purple-50: #f5f3ff;
+  --purple-50: #eff6ff;
   --white: #ffffff;
   --font-sans: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -103,7 +105,7 @@ body {
   top: 0;
   left: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--blue), var(--purple), var(--teal));
+  background: linear-gradient(90deg, var(--blue-dark), var(--blue), var(--blue-light));
   z-index: 10000;
   transition: width 0.1s linear;
   border-radius: 0 2px 2px 0;
@@ -243,42 +245,35 @@ p { margin-bottom: 16px; }
 /* Animations */
 .fade-up {
   opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+  transform: translateY(20px);
+  transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
 }
 .fade-up.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-.fade-left {
-  opacity: 0;
-  transform: translateX(-40px);
-  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
-}
-.fade-left.visible {
-  opacity: 1;
-  transform: translateX(0);
-}
-
+/* fade-left / fade-right now behave same as fade-up for clean appearance */
+.fade-left,
 .fade-right {
   opacity: 0;
-  transform: translateX(40px);
-  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+  transform: translateY(20px);
+  transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
 }
+.fade-left.visible,
 .fade-right.visible {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateY(0);
 }
 
 .scale-in {
   opacity: 0;
-  transform: scale(0.9);
-  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+  transform: translateY(20px);
+  transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
 }
 .scale-in.visible {
   opacity: 1;
-  transform: scale(1);
+  transform: translateY(0);
 }
 
 .stagger-1 { transition-delay: 0.1s; }
@@ -343,7 +338,7 @@ p { margin-bottom: 16px; }
 }
 .navbar-brand:hover { opacity: 0.8; }
 .navbar-brand span {
-  background: linear-gradient(135deg, var(--blue), var(--purple));
+  background: linear-gradient(135deg, var(--blue), var(--blue-light));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -462,20 +457,20 @@ p { margin-bottom: 16px; }
 }
 .hero-orb-2 {
   width: 400px; height: 400px;
-  background: var(--purple);
+  background: var(--blue-dark);
   bottom: -100px; left: -100px;
   animation-delay: -3s;
 }
 .hero-orb-3 {
   width: 300px; height: 300px;
-  background: var(--teal);
+  background: var(--blue-light);
   top: 50%; left: 50%;
   animation-delay: -5s;
 }
 @keyframes float {
   0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(30px, -30px) scale(1.05); }
-  66% { transform: translate(-20px, 20px) scale(0.95); }
+  33% { transform: translate(10px, -10px) scale(1.02); }
+  66% { transform: translate(-8px, 8px) scale(0.98); }
 }
 
 /* Particles */
@@ -510,7 +505,7 @@ p { margin-bottom: 16px; }
   letter-spacing: -0.03em;
 }
 .hero-catch .gradient-text {
-  background: linear-gradient(135deg, var(--blue), var(--purple), var(--teal));
+  background: linear-gradient(135deg, var(--blue-dark), var(--blue), var(--blue-light));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -567,7 +562,7 @@ p { margin-bottom: 16px; }
 .hero-stat .value {
   font-size: 28px;
   font-weight: 900;
-  background: linear-gradient(135deg, var(--blue), var(--teal));
+  background: linear-gradient(135deg, var(--blue), var(--blue-light));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -596,7 +591,7 @@ p { margin-bottom: 16px; }
   left: -200px;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, var(--purple-glow), transparent 70%);
+  background: radial-gradient(circle, var(--blue-glow), transparent 70%);
   filter: blur(80px);
   opacity: 0.3;
   pointer-events: none;
@@ -763,8 +758,8 @@ p { margin-bottom: 16px; }
   text-align: center;
   padding: 40px 24px;
   border-radius: 20px;
-  background: rgba(20, 184, 166, 0.08);
-  border: 1px solid rgba(20, 184, 166, 0.15);
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.15);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   transition: all 0.5s var(--ease-out-expo);
@@ -772,12 +767,12 @@ p { margin-bottom: 16px; }
 .value-item:hover {
   transform: translateY(-6px) scale(1.02);
   box-shadow: 0 16px 48px var(--teal-glow);
-  background: rgba(20, 184, 166, 0.15);
+  background: rgba(59, 130, 246, 0.15);
 }
 .value-item .num {
   font-size: 56px;
   font-weight: 900;
-  background: linear-gradient(135deg, var(--teal), #0d9488);
+  background: linear-gradient(135deg, var(--blue), var(--blue-light));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -843,10 +838,10 @@ p { margin-bottom: 16px; }
   transition: all 0.5s var(--ease-out-expo);
 }
 .screen-placeholder:hover {
-  border-color: var(--teal);
+  border-color: var(--blue);
   transform: translateY(-4px);
   box-shadow: 0 8px 32px var(--teal-glow);
-  background: rgba(20, 184, 166, 0.1);
+  background: rgba(59, 130, 246, 0.1);
 }
 
 /* ========================================
@@ -907,7 +902,7 @@ p { margin-bottom: 16px; }
 }
 .new-badge {
   display: inline-block;
-  background: linear-gradient(135deg, var(--coral), #dc2626);
+  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
   color: var(--white);
   font-size: 11px;
   font-weight: 700;
@@ -916,8 +911,8 @@ p { margin-bottom: 16px; }
   animation: badgePulse 2s ease-in-out infinite;
 }
 @keyframes badgePulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-  50% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(59, 130, 246, 0); }
 }
 .extra-box {
   margin-top: 56px;
@@ -972,7 +967,7 @@ p { margin-bottom: 16px; }
 .dash-item:nth-child(even) { direction: rtl; }
 .dash-item:nth-child(even) > * { direction: ltr; }
 .dash-screen {
-  background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(139,92,246,0.15), rgba(20,184,166,0.15));
+  background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(37,99,235,0.15), rgba(59,130,246,0.1));
   border: 1px solid rgba(59,130,246,0.2);
   border-radius: 16px;
   padding: 60px 24px;
@@ -1026,7 +1021,7 @@ p { margin-bottom: 16px; }
   height: 20px;
   margin-right: 10px;
   vertical-align: middle;
-  background: linear-gradient(135deg, var(--blue), var(--teal));
+  background: linear-gradient(135deg, var(--blue), var(--blue-light));
   border-radius: 50%;
   color: white;
   font-size: 11px;
@@ -1167,9 +1162,9 @@ p { margin-bottom: 16px; }
   color: var(--gray-300);
   transition: background 0.3s;
 }
-.pricing-table tr:hover td { background: rgba(245, 158, 11, 0.04); }
+.pricing-table tr:hover td { background: rgba(59, 130, 246, 0.04); }
 .pricing-table tr:last-child td {
-  background: rgba(245, 158, 11, 0.08);
+  background: rgba(59, 130, 246, 0.08);
   font-weight: 700;
   border-bottom: none;
   color: var(--white);
@@ -1178,7 +1173,7 @@ p { margin-bottom: 16px; }
 .roi-big {
   font-size: 80px;
   font-weight: 900;
-  background: linear-gradient(135deg, var(--amber), #d97706);
+  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1198,15 +1193,15 @@ p { margin-bottom: 16px; }
   -webkit-backdrop-filter: var(--glass-blur);
   border-radius: 20px;
   padding: 36px;
-  border: 1px solid rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.15);
   text-align: center;
   transition: all 0.5s var(--ease-out-expo);
 }
 .asset-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 16px 48px var(--amber-glow);
-  border-color: var(--amber);
-  background: rgba(245, 158, 11, 0.08);
+  border-color: var(--blue);
+  background: rgba(59, 130, 246, 0.08);
 }
 
 /* ========================================
@@ -1303,7 +1298,7 @@ p { margin-bottom: 16px; }
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, var(--teal), var(--blue));
+  background: linear-gradient(90deg, var(--blue-dark), var(--blue-light));
   transform: scaleX(0);
   transition: transform 0.6s var(--ease-out-expo);
 }
@@ -1316,7 +1311,7 @@ p { margin-bottom: 16px; }
 .step-card .step-num {
   font-size: 56px;
   font-weight: 900;
-  background: linear-gradient(135deg, var(--teal), var(--blue));
+  background: linear-gradient(135deg, var(--blue-dark), var(--blue-light));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1342,7 +1337,7 @@ p { margin-bottom: 16px; }
 @media (max-width: 640px) { .timeline li { grid-template-columns: 1fr; gap: 8px; } }
 .timeline .week {
   font-weight: 700;
-  color: var(--teal);
+  color: var(--blue);
   font-size: 15px;
 }
 .timeline .desc { font-size: 15px; color: var(--gray-400); line-height: 1.8; }
@@ -1430,7 +1425,7 @@ p { margin-bottom: 16px; }
    SECTION 14 — Final CTA
    ======================================== */
 .final-cta {
-  background: linear-gradient(135deg, #059669, var(--teal), #0d9488);
+  background: linear-gradient(135deg, var(--blue-dark), var(--blue), #1d4ed8);
   background-size: 400% 400%;
   animation: ctaGradient 8s ease-in-out infinite;
   padding: 120px 0;
@@ -1462,7 +1457,7 @@ p { margin-bottom: 16px; }
 }
 .btn-white {
   background: var(--white);
-  color: #059669;
+  color: var(--blue-dark);
   padding: 18px 36px;
   border-radius: 14px;
   font-weight: 700;
@@ -1588,7 +1583,7 @@ footer p {
      ======================================== -->
 <section class="challenges" id="challenges">
   <div class="container">
-    <p class="section-label fade-up" style="color: var(--coral);">Common Challenges</p>
+    <p class="section-label fade-up" style="color: var(--blue);">Common Challenges</p>
     <h2 class="fade-up">採用現場の4つの課題</h2>
     <p class="fade-up" style="margin-bottom:48px;">全業種に共通する、いま採用担当者が直面している構造的な課題。</p>
 
@@ -1629,7 +1624,7 @@ footer p {
      ======================================== -->
 <section class="vision" id="vision">
   <div class="container">
-    <p class="section-label fade-up" style="color: var(--amber);">Vision</p>
+    <p class="section-label fade-up" style="color: var(--blue);">Vision</p>
     <h2 class="fade-up">「採用したい人が、来る採用」へ。</h2>
     <p class="fade-up" style="max-width:700px; margin-bottom:56px;">条件や待遇の打ち出しだけでは、もう選ばれない。自社で働くことへの「共感」が、内定承諾の決め手になっています。</p>
 
@@ -1661,13 +1656,13 @@ footer p {
      ======================================== -->
 <section class="product" id="product">
   <div class="container">
-    <p class="section-label fade-up" style="color: var(--teal);">Product</p>
+    <p class="section-label fade-up" style="color: var(--blue);">Product</p>
     <h2 class="fade-up">面接外がブラックボックスのまま、でいいですか？</h2>
     <p class="fade-up" style="max-width:750px; margin-bottom:16px;">「16本のショート動画」×「独自の視聴行動分析システム」。学生が誰の動画を、いつ、何秒見たか——その行動データが、言葉にならない本音を数字にします。</p>
 
     <div class="product-split">
-      <div class="product-panel fade-left" style="color: var(--teal);">
-        <span class="badge" style="background: linear-gradient(135deg, var(--teal), #0d9488); color: var(--white);">学生側の体験</span>
+      <div class="product-panel fade-left" style="color: var(--blue);">
+        <span class="badge" style="background: linear-gradient(135deg, var(--blue), var(--blue-dark)); color: var(--white);">学生側の体験</span>
         <h3>学生には「自分だけのページ」が届く</h3>
         <p style="color: var(--gray-400);">「吉田亮太 様へのコンテンツ」——個人名入りの限定ポータルがスマホに届きます。</p>
         <p style="color: var(--gray-400);">面接のように「見られている意識」がない状態で視聴するから、本音の行動が正確に記録されます。</p>
@@ -1707,7 +1702,7 @@ footer p {
      ======================================== -->
 <section class="survey" id="survey">
   <div class="container">
-    <p class="section-label fade-up" style="color: var(--teal);">Survey — Free</p>
+    <p class="section-label fade-up" style="color: var(--blue);">Survey — Free</p>
     <h2 class="fade-up">採用広報サーベイ（無償提供）</h2>
     <p class="fade-up" style="max-width:700px; margin-bottom:16px; font-size:20px; font-weight:700; color:var(--white);">「何を撮るか」に迷っている時間が、いちばんもったいない。</p>
     <p class="fade-up" style="max-width:700px; margin-bottom:56px;">入社3年目以内の若手社員に5段階評価＋自由記述アンケートを配信。4軸スコアが自動集計され（例：目標の魅力3.30・活動の魅力2.80）、動画テーマが数字で決まります。費用はゼロ。まず自社の採用の強みをデータで確認することから始められます。</p>
@@ -1757,16 +1752,16 @@ footer p {
         <p style="font-size:13px; color:var(--gray-400); margin-bottom:0;"><strong>コンテンツ例：</strong>会社説明会映像 / 数字で見る会社 / 社長インタビュー（理念編）</p>
       </div>
       <div class="arrow-col">→</div>
-      <div class="phase-card fade-up stagger-2" style="border-top-color: var(--teal);">
-        <div class="phase-label" style="color: var(--teal);">Phase 2</div>
+      <div class="phase-card fade-up stagger-2" style="border-top-color: var(--blue);">
+        <div class="phase-label" style="color: var(--blue);">Phase 2</div>
         <h3>選考中</h3>
         <div class="phase-sub">〜深く具体的に〜</div>
         <p style="font-size:14px; margin-bottom:12px;"><strong>目的：</strong>「働く自分」をイメージさせ、他社と差別化し面接での対話を深める</p>
         <p style="font-size:13px; color:var(--gray-400); margin-bottom:0;"><strong>コンテンツ例：</strong>先輩1日密着（職種別）/ 先輩後輩対談 / 同期座談会</p>
       </div>
       <div class="arrow-col">→</div>
-      <div class="phase-card fade-up stagger-3" style="border-top-color: var(--amber);">
-        <div class="phase-label" style="color: var(--amber);">Phase 3</div>
+      <div class="phase-card fade-up stagger-3" style="border-top-color: var(--blue);">
+        <div class="phase-label" style="color: var(--blue);">Phase 3</div>
         <h3>内定〜承諾</h3>
         <div class="phase-sub">〜不安の払拭〜</div>
         <p style="font-size:14px; margin-bottom:12px;"><strong>目的：</strong>待遇・環境など「最後に残る不安」を解消し、入社決断を後押しする</p>
@@ -1889,7 +1884,7 @@ footer p {
      ======================================== -->
 <section class="cases" id="cases">
   <div class="container">
-    <p class="section-label fade-up" style="color: var(--purple);">Case Studies</p>
+    <p class="section-label fade-up" style="color: var(--blue);">Case Studies</p>
     <h2 class="fade-up">導入事例（業界別ストーリー型）</h2>
     <p class="fade-up" style="max-width:700px; margin-bottom:56px;">「うちの業界でも使える」という確信を、具体的な数字でお見せします。</p>
 
@@ -1912,16 +1907,16 @@ footer p {
 
       <!-- Case 2 -->
       <div class="case-card fade-up stagger-2">
-        <span class="industry-badge" style="background: rgba(139,92,246,0.15); color: var(--purple);">金融・保険</span>
+        <span class="industry-badge" style="background: rgba(59,130,246,0.15); color: var(--blue);">金融・保険</span>
         <h3>金融・保険業界（従業員1,000名規模）</h3>
         <p style="font-size:14px; margin-bottom:4px;"><strong>課題</strong></p>
         <p style="font-size:14px;">内定辞退率が60%と高く、毎年多大な採用コストが発生していた</p>
         <p style="font-size:14px; margin-bottom:4px;"><strong>施策</strong></p>
         <p style="font-size:14px;">内定者向けポータルを開設し、先輩社員動画9本を内定後に段階配信。内定者の不安を払拭</p>
         <div style="margin-top:24px; padding-top:24px; border-top:1px solid rgba(255,255,255,0.1);">
-          <div class="result-number" style="color: var(--purple);">-30<span style="font-size:20px;">pt</span></div>
+          <div class="result-number" style="color: var(--blue);">-30<span style="font-size:20px;">pt</span></div>
           <div class="result-detail">内定辞退率 60%→30%</div>
-          <div class="result-number" style="color: var(--purple); margin-top:16px;">1,350<span style="font-size:20px;">万円</span></div>
+          <div class="result-number" style="color: var(--blue); margin-top:16px;">1,350<span style="font-size:20px;">万円</span></div>
           <div class="result-detail">コスト削減を達成</div>
         </div>
       </div>
@@ -1946,7 +1941,7 @@ footer p {
      ======================================== -->
 <section class="pricing" id="pricing">
   <div class="container">
-    <p class="section-label fade-up" style="color: var(--amber);">Pricing &amp; ROI</p>
+    <p class="section-label fade-up" style="color: var(--blue);">Pricing &amp; ROI</p>
     <h2 class="fade-up">料金 ＋ ROI試算</h2>
     <p class="fade-up" style="max-width:700px; margin-bottom:56px;">「費用」ではなく「投資」として意思決定していただくための情報です。</p>
 
@@ -1972,7 +1967,7 @@ footer p {
         </tr>
         <tr>
           <td>採用広報サーベイ</td>
-          <td style="font-weight:700; color:var(--green);">無償提供</td>
+          <td style="font-weight:700; color:var(--blue);">無償提供</td>
           <td>自社の魅力抽出アンケート。動画企画テーマの策定に使用。社員向けサーベイツール提供。</td>
         </tr>
         <tr>
@@ -2015,7 +2010,7 @@ footer p {
      ======================================== -->
 <section class="comparison" id="comparison">
   <div class="container">
-    <p class="section-label fade-up" style="color: var(--coral);">Comparison</p>
+    <p class="section-label fade-up" style="color: var(--blue);">Comparison</p>
     <h2 class="fade-up">競合比較（4軸で差別化）</h2>
     <p class="fade-up" style="max-width:700px; margin-bottom:56px;">「他のツールとは根本的に違う」——その理由を4つの軸で示します。</p>
 
@@ -2065,7 +2060,7 @@ footer p {
      ======================================== -->
 <section class="onboarding" id="onboarding">
   <div class="container">
-    <p class="section-label fade-up" style="color: var(--teal);">Getting Started</p>
+    <p class="section-label fade-up" style="color: var(--blue);">Getting Started</p>
     <h2 class="fade-up">かんたん3ステップ ＋ 導入スケジュール</h2>
     <p class="fade-up" style="max-width:700px; margin-bottom:56px;">「すぐ動ける・採用シーズンに間に合う」導入フロー。</p>
 
