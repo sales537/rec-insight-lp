@@ -75,13 +75,11 @@
   --font-sans: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  /* Glassmorphism tokens */
-  --glass-bg: rgba(255, 255, 255, 0.06);
+  /* Glass tokens — backdrop-filter disabled to prevent text jitter */
+  --glass-bg: rgba(255, 255, 255, 0.08);
   --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-blur: blur(20px);
   --glass-bg-light: rgba(255, 255, 255, 0.65);
   --glass-border-light: rgba(255, 255, 255, 0.5);
-  --glass-blur-light: blur(16px);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -191,7 +189,6 @@ p { margin-bottom: 16px; }
   background: rgba(255,255,255,0.08);
   color: var(--white);
   border: 1.5px solid rgba(255,255,255,0.25);
-  backdrop-filter: blur(8px);
 }
 .btn-secondary:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.5); }
 
@@ -225,8 +222,7 @@ p { margin-bottom: 16px; }
 /* Cards — Glassmorphism */
 .card {
   background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+
   border: 1px solid var(--glass-border);
   border-radius: 20px;
   padding: 32px;
@@ -295,9 +291,7 @@ p { margin-bottom: 16px; }
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(10, 15, 30, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(10, 15, 30, 0.92);
   z-index: 1000;
   padding: 0 32px;
   border-bottom: 1px solid rgba(255,255,255,0.06);
@@ -381,7 +375,6 @@ p { margin-bottom: 16px; }
     left: 0;
     right: 0;
     background: rgba(10, 15, 30, 0.98);
-    backdrop-filter: blur(20px);
     flex-direction: column;
     padding: 16px 32px 24px;
     gap: 0;
@@ -493,7 +486,6 @@ p { margin-bottom: 16px; }
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 14px;
   padding: 20px 24px;
-  backdrop-filter: blur(12px);
   transition: transform 0.4s var(--ease-out-expo), background 0.4s var(--ease-out-expo), border-color 0.4s var(--ease-out-expo), box-shadow 0.4s var(--ease-out-expo);
   text-align: center;
 }
@@ -669,8 +661,7 @@ p { margin-bottom: 16px; }
 @media (max-width: 960px) { .product-split { grid-template-columns: 1fr; } }
 .product-panel {
   background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+
   border: 1px solid var(--glass-border);
   border-radius: 20px;
   padding: 40px;
@@ -710,8 +701,7 @@ p { margin-bottom: 16px; }
   border-radius: 20px;
   background: rgba(59, 130, 246, 0.08);
   border: 1px solid rgba(59, 130, 246, 0.15);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+
   transition: transform 0.5s var(--ease-out-expo), background 0.5s var(--ease-out-expo), border-color 0.5s var(--ease-out-expo), box-shadow 0.5s var(--ease-out-expo);
 }
 .value-item:hover {
@@ -776,8 +766,7 @@ p { margin-bottom: 16px; }
 @media (max-width: 960px) { .survey-screens { grid-template-columns: 1fr; } }
 .screen-placeholder {
   background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+
   border: 1px solid var(--glass-border);
   border-radius: 16px;
   padding: 56px 24px;
@@ -800,8 +789,7 @@ p { margin-bottom: 16px; }
 .phases { padding: 120px 0; background: var(--navy); position: relative; }
 .phase-card {
   background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+
   border: 1px solid var(--glass-border);
   border-radius: 20px;
   padding: 36px;
@@ -859,8 +847,7 @@ p { margin-bottom: 16px; }
   margin-top: 56px;
   padding: 40px;
   background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+
   border-radius: 20px;
   border: 1px solid var(--glass-border);
 }
@@ -888,8 +875,7 @@ p { margin-bottom: 16px; }
 }
 .dash-item {
   background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+
   border: 1px solid var(--glass-border);
   border-radius: 24px;
   padding: 48px;
@@ -981,8 +967,7 @@ p { margin-bottom: 16px; }
 }
 .case-card {
   background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+
   border: 1px solid var(--glass-border);
   border-radius: 24px;
   padding: 48px;
@@ -1022,8 +1007,7 @@ p { margin-bottom: 16px; }
   margin-top: 80px;
   padding: 48px;
   background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+
   border-radius: 20px;
   text-align: center;
   border: 1px solid var(--glass-border);
@@ -1124,8 +1108,7 @@ p { margin-bottom: 16px; }
 @media (max-width: 960px) { .asset-grid { grid-template-columns: 1fr; } }
 .asset-card {
   background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+
   border-radius: 20px;
   padding: 36px;
   border: 1px solid rgba(59, 130, 246, 0.15);
@@ -1216,8 +1199,7 @@ p { margin-bottom: 16px; }
 }
 .step-card {
   background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+
   border: 1px solid var(--glass-border);
   border-radius: 20px;
   padding: 40px;
@@ -1411,7 +1393,6 @@ p { margin-bottom: 16px; }
   border: 1.5px solid rgba(255,255,255,0.3);
   cursor: pointer;
   transition: transform 0.4s var(--ease-out-expo), background 0.4s var(--ease-out-expo), border-color 0.4s var(--ease-out-expo), box-shadow 0.4s var(--ease-out-expo);
-  backdrop-filter: blur(8px);
 }
 .btn-white-outline:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.6); transform: translateY(-3px); }
 .final-note {
@@ -1798,7 +1779,7 @@ footer p {
       </div>
     </div>
 
-    <div class="fade-up" style="text-align:center; padding:36px; background:var(--glass-bg); backdrop-filter:var(--glass-blur); -webkit-backdrop-filter:var(--glass-blur); border:1px solid var(--glass-border); border-radius:16px; margin-top:16px;">
+    <div class="fade-up" style="text-align:center; padding:36px; background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:16px; margin-top:16px;">
       <p style="font-size:14px; color:var(--gray-400); margin-bottom:0;"><strong style="color:var(--white);">運用工数：週あたり1〜2時間目安。</strong> CSVインポートと画面確認が主な業務。Excelでの手動管理とは、根本的に違います。</p>
     </div>
   </div>
