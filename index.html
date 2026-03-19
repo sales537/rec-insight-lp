@@ -281,10 +281,75 @@ p { margin-bottom: 16px; }
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.nav-link {
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: all 0.3s var(--ease-out-expo);
+  white-space: nowrap;
+}
+.nav-link:hover {
+  color: var(--white);
+  background: rgba(255,255,255,0.08);
+}
 .navbar-cta .btn {
   padding: 10px 24px;
   font-size: 14px;
   border-radius: 10px;
+}
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  flex-direction: column;
+  gap: 5px;
+}
+.nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+.nav-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.nav-toggle.active span:nth-child(2) { opacity: 0; }
+.nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+@media (max-width: 960px) {
+  .navbar-nav {
+    display: none;
+    position: absolute;
+    top: 72px;
+    left: 0;
+    right: 0;
+    background: rgba(10, 15, 30, 0.98);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    padding: 16px 32px 24px;
+    gap: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .navbar-nav.open { display: flex; }
+  .nav-link {
+    padding: 14px 16px;
+    font-size: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    border-radius: 0;
+    width: 100%;
+  }
+  .nav-toggle { display: flex; }
+  .navbar-cta { display: none; }
 }
 
 /* ========================================
@@ -509,16 +574,6 @@ p { margin-bottom: 16px; }
 .vision-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 16px 48px rgba(0,0,0,0.1);
-}
-.vision-card .icon {
-  font-size: 36px;
-  margin-bottom: 16px;
-  display: inline-block;
-  animation: pulse 2s ease-in-out infinite;
-}
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
 }
 .vision-card p { font-size: 15px; color: var(--gray-700); margin-bottom: 0; font-weight: 500; }
 
@@ -943,11 +998,6 @@ p { margin-bottom: 16px; }
   box-shadow: 0 16px 48px var(--amber-glow);
   border-color: var(--amber);
 }
-.asset-card .icon {
-  font-size: 36px;
-  margin-bottom: 12px;
-  display: inline-block;
-}
 
 /* ========================================
    SECTION 10 — Comparison
@@ -1243,9 +1293,18 @@ footer p {
 <nav class="navbar" id="navbar">
   <div class="container">
     <a href="#" class="navbar-brand">REC <span>Insight</span></a>
+    <div class="navbar-nav">
+      <a href="#product" class="nav-link">サービス概要</a>
+      <a href="#dashboard" class="nav-link">ダッシュボード</a>
+      <a href="#cases" class="nav-link">導入事例</a>
+      <a href="#pricing" class="nav-link">料金</a>
+      <a href="#faq" class="nav-link">FAQ</a>
+      <a href="#company" class="nav-link">会社概要</a>
+    </div>
     <div class="navbar-cta">
       <a href="#final-cta" class="btn btn-primary" style="min-width:auto;">無料ヒアリングを申し込む</a>
     </div>
+    <button class="nav-toggle" id="navToggle" aria-label="メニュー"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
@@ -1270,12 +1329,12 @@ footer p {
       <div class="hero-stat">
         <div class="label">内定辞退率</div>
         <div class="value"><span class="counter" data-target="60">0</span>%→<span class="counter" data-target="30">0</span>%</div>
-        <div class="company">フコク生命</div>
+        <div class="company">金融・保険業界 A社</div>
       </div>
       <div class="hero-stat">
         <div class="label">選考応募率</div>
         <div class="value"><span class="counter" data-target="16">0</span>%→<span class="counter" data-target="35">0</span>%</div>
-        <div class="company">広島トヨペット</div>
+        <div class="company">自動車ディーラー B社</div>
       </div>
     </div>
     <div class="btn-group fade-up stagger-5">
@@ -1331,19 +1390,15 @@ footer p {
 
     <div class="grid-4">
       <div class="vision-card fade-up scale-in stagger-1" style="border-top-color: var(--blue);">
-        <div class="icon">&#10022;</div>
         <p>自社に本当に合う人材が、説明会に来ている</p>
       </div>
       <div class="vision-card fade-up scale-in stagger-2" style="border-top-color: var(--teal);">
-        <div class="icon">&#10022;</div>
         <p>内定を出したら、迷わず承諾される</p>
       </div>
       <div class="vision-card fade-up scale-in stagger-3" style="border-top-color: var(--purple);">
-        <div class="icon">&#10022;</div>
         <p>入社後に活躍し、長く働いてくれる</p>
       </div>
       <div class="vision-card fade-up scale-in stagger-4" style="border-top-color: var(--amber);">
-        <div class="icon">&#10022;</div>
         <p>採用ノウハウが社内に積み上がる</p>
       </div>
     </div>
@@ -1423,15 +1478,12 @@ footer p {
 
     <div class="survey-screens">
       <div class="screen-placeholder fade-up scale-in stagger-1">
-        <div style="font-size:40px; margin-bottom:12px;">&#128221;</div>
         サーベイ編集画面<br><span style="font-size:12px; color:var(--gray-400);">設問設計・回答リンク管理</span>
       </div>
       <div class="screen-placeholder fade-up scale-in stagger-2">
-        <div style="font-size:40px; margin-bottom:12px;">&#128241;</div>
         社員回答画面<br><span style="font-size:12px; color:var(--gray-400);">スマホ最適化UI・5段階評価</span>
       </div>
       <div class="screen-placeholder fade-up scale-in stagger-3">
-        <div style="font-size:40px; margin-bottom:12px;">&#128202;</div>
         集計・属性フィルター画面<br><span style="font-size:12px; color:var(--gray-400);">4軸スコア・部署別分析</span>
       </div>
     </div>
@@ -1501,7 +1553,6 @@ footer p {
     <div class="dash-item fade-up">
       <div class="dash-screen">
         <div>
-          <div style="font-size:48px; margin-bottom:12px;">&#128202;</div>
           全体概要ダッシュボード<br>
           <span style="font-size:12px; opacity:0.7;">スクリーンショット掲載推奨</span>
         </div>
@@ -1522,7 +1573,6 @@ footer p {
     <div class="dash-item fade-up">
       <div class="dash-screen">
         <div>
-          <div style="font-size:48px; margin-bottom:12px;">&#127910;</div>
           動画別分析ダッシュボード<br>
           <span style="font-size:12px; opacity:0.7;">スクリーンショット掲載推奨</span>
         </div>
@@ -1543,7 +1593,6 @@ footer p {
     <div class="dash-item fade-up">
       <div class="dash-screen">
         <div>
-          <div style="font-size:48px; margin-bottom:12px;">&#128100;</div>
           フェーズ別学生分析<br>
           <span style="font-size:12px; opacity:0.7;">スクリーンショット掲載推奨</span>
         </div>
@@ -1564,7 +1613,6 @@ footer p {
     <div class="dash-item fade-up">
       <div class="dash-screen">
         <div>
-          <div style="font-size:48px; margin-bottom:12px;">&#128203;</div>
           学生一覧・個別管理<br>
           <span style="font-size:12px; opacity:0.7;">スクリーンショット掲載推奨</span>
         </div>
@@ -1601,7 +1649,7 @@ footer p {
       <div class="case-card fade-up stagger-1" style="border-color: var(--blue);">
         <div style="position:absolute; top:0; left:0; right:0; height:200px; background:linear-gradient(135deg, var(--blue), var(--blue-dark));"></div>
         <span class="industry-badge" style="background: var(--blue-50); color: var(--blue);">自動車ディーラー</span>
-        <h3>広島トヨペット</h3>
+        <h3>自動車ディーラー B社</h3>
         <p style="font-size:14px; margin-bottom:4px;"><strong>課題</strong></p>
         <p style="font-size:14px;">エントリー後の説明会参加率が低く、選考応募も伸び悩んでいた</p>
         <p style="font-size:14px; margin-bottom:4px;"><strong>施策</strong></p>
@@ -1618,13 +1666,13 @@ footer p {
       <div class="case-card fade-up stagger-2" style="border-color: var(--purple);">
         <div style="position:absolute; top:0; left:0; right:0; height:200px; background:linear-gradient(135deg, var(--purple), #6d28d9);"></div>
         <span class="industry-badge" style="background: var(--purple-50); color: var(--purple);">金融・保険</span>
-        <h3>フコク生命</h3>
+        <h3>金融・保険業界 A社</h3>
         <p style="font-size:14px; margin-bottom:4px;"><strong>課題</strong></p>
         <p style="font-size:14px;">内定辞退率が60%と高く、毎年多大な採用コストが発生していた</p>
         <p style="font-size:14px; margin-bottom:4px;"><strong>施策</strong></p>
         <p style="font-size:14px;">内定者向けポータルを開設し、先輩社員動画9本を内定後に段階配信。内定者の不安を払拭</p>
         <div style="margin-top:24px; padding-top:24px; border-top:1px solid var(--gray-200);">
-          <div class="result-number" style="color: var(--purple);">&#9660;30<span style="font-size:20px;">pt</span></div>
+          <div class="result-number" style="color: var(--purple);">-30<span style="font-size:20px;">pt</span></div>
           <div class="result-detail">内定辞退率 60%→30%</div>
           <div class="result-number" style="color: var(--purple); margin-top:16px;">1,350<span style="font-size:20px;">万円</span></div>
           <div class="result-detail">コスト削減を達成</div>
@@ -1639,8 +1687,8 @@ footer p {
         <span>住友生命</span>
         <span>ソニー生命</span>
         <span>MetLife生命</span>
-        <span>フコク生命</span>
-        <span>広島トヨペット</span>
+        <span>大手金融A社</span>
+        <span>自動車ディーラーB社</span>
         <span>神奈川トヨタ</span>
         <span>フルキャスト</span>
       </div>
@@ -1695,23 +1743,20 @@ footer p {
       <h3>辞退を2人防ぐだけで、投資回収完了。</h3>
       <div class="roi-big"><span class="counter" data-target="1.5" data-decimal="true">0</span>人分</div>
       <p style="font-size:15px; color:var(--gray-600);">投資額230万円 ÷ 採用コスト150万円 ≒ 辞退1.5人分を防ぐだけで元が取れる計算</p>
-      <p style="font-size:14px; color:var(--gray-400); font-style:italic;">実績：フコク生命 辞退率60%→30%で1,350万円のコスト削減を達成</p>
+      <p style="font-size:14px; color:var(--gray-400); font-style:italic;">実績：金融・保険業界A社 辞退率60%→30%で1,350万円のコスト削減を達成</p>
     </div>
 
     <h3 class="fade-up" style="margin-top:56px; text-align:center;">「費用」から「投資」へ——3つの資産価値</h3>
     <div class="asset-grid">
       <div class="asset-card fade-up scale-in stagger-1">
-        <div class="icon">&#127909;</div>
         <h3 style="font-size:16px;">動画は資産</h3>
         <p style="font-size:14px; margin-bottom:0;">制作した16本は説明会・HP・SNSで何年でも使い続けられます</p>
       </div>
       <div class="asset-card fade-up scale-in stagger-2">
-        <div class="icon">&#128200;</div>
         <h3 style="font-size:16px;">データは資産</h3>
         <p style="font-size:14px; margin-bottom:0;">視聴ログが蓄積され、翌年の採用戦略の根拠になります</p>
       </div>
       <div class="asset-card fade-up scale-in stagger-3">
-        <div class="icon">&#9989;</div>
         <h3 style="font-size:16px;">成果が可視化</h3>
         <p style="font-size:14px; margin-bottom:0;">何人が視聴し何人が承諾したかROIを毎年数字で証明できます</p>
       </div>
@@ -2061,6 +2106,16 @@ footer p {
     }
   }
 
+  // --- Mobile nav toggle ---
+  var navToggle = document.getElementById('navToggle');
+  var navMenu = document.querySelector('.navbar-nav');
+  if (navToggle && navMenu) {
+    navToggle.addEventListener('click', function() {
+      navToggle.classList.toggle('active');
+      navMenu.classList.toggle('open');
+    });
+  }
+
   // --- Smooth scroll for anchor links ---
   document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
     anchor.addEventListener('click', function(e) {
@@ -2070,6 +2125,11 @@ footer p {
       var target = document.querySelector(href);
       if (target) {
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Close mobile nav if open
+        if (navToggle && navMenu) {
+          navToggle.classList.remove('active');
+          navMenu.classList.remove('open');
+        }
       }
     });
   });
