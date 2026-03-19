@@ -245,27 +245,29 @@ p { margin-bottom: 16px; }
   line-height: 1;
 }
 
-/* Animations — opacity only, no transform to prevent layout shift */
+/* Animations — keyframe-based to avoid conflict with hover transition: all */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 .fade-up,
 .fade-left,
 .fade-right,
 .scale-in {
   opacity: 0;
-  transition: opacity 0.6s ease-out;
-  will-change: opacity;
 }
 .fade-up.visible,
 .fade-left.visible,
 .fade-right.visible,
 .scale-in.visible {
-  opacity: 1;
+  animation: fadeIn 0.6s ease-out forwards;
 }
 
-.stagger-1 { transition-delay: 0.1s; }
-.stagger-2 { transition-delay: 0.2s; }
-.stagger-3 { transition-delay: 0.3s; }
-.stagger-4 { transition-delay: 0.4s; }
-.stagger-5 { transition-delay: 0.5s; }
+.stagger-1.visible { animation-delay: 0.1s; }
+.stagger-2.visible { animation-delay: 0.2s; }
+.stagger-3.visible { animation-delay: 0.3s; }
+.stagger-4.visible { animation-delay: 0.4s; }
+.stagger-5.visible { animation-delay: 0.5s; }
 
 /* Responsive */
 @media (max-width: 960px) {
@@ -1158,7 +1160,7 @@ p { margin-bottom: 16px; }
 .roi-big {
   font-size: 80px;
   font-weight: 900;
-  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+  background: linear-gradient(135deg, var(--teal), var(--blue));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1568,7 +1570,7 @@ footer p {
      ======================================== -->
 <section class="challenges" id="challenges">
   <div class="container">
-    <p class="section-label fade-up" style="color: var(--teal);">Common Challenges</p>
+    <p class="section-label fade-up" style="color: var(--blue);">Common Challenges</p>
     <h2 class="fade-up">採用現場の4つの課題</h2>
     <p class="fade-up" style="margin-bottom:48px;">全業種に共通する、いま採用担当者が直面している構造的な課題。</p>
 
@@ -1641,7 +1643,7 @@ footer p {
      ======================================== -->
 <section class="product" id="product">
   <div class="container">
-    <p class="section-label fade-up" style="color: var(--teal);">Product</p>
+    <p class="section-label fade-up" style="color: var(--blue);">Product</p>
     <h2 class="fade-up">面接外がブラックボックスのまま、でいいですか？</h2>
     <p class="fade-up" style="max-width:750px; margin-bottom:16px;">「16本のショート動画」×「独自の視聴行動分析システム」。学生が誰の動画を、いつ、何秒見たか——その行動データが、言葉にならない本音を数字にします。</p>
 
@@ -1737,16 +1739,16 @@ footer p {
         <p style="font-size:13px; color:var(--gray-400); margin-bottom:0;"><strong>コンテンツ例：</strong>会社説明会映像 / 数字で見る会社 / 社長インタビュー（理念編）</p>
       </div>
       <div class="arrow-col">→</div>
-      <div class="phase-card fade-up stagger-2" style="border-top-color: var(--teal);">
-        <div class="phase-label" style="color: var(--teal);">Phase 2</div>
+      <div class="phase-card fade-up stagger-2" style="border-top-color: var(--blue);">
+        <div class="phase-label" style="color: var(--blue);">Phase 2</div>
         <h3>選考中</h3>
         <div class="phase-sub">〜深く具体的に〜</div>
         <p style="font-size:14px; margin-bottom:12px;"><strong>目的：</strong>「働く自分」をイメージさせ、他社と差別化し面接での対話を深める</p>
         <p style="font-size:13px; color:var(--gray-400); margin-bottom:0;"><strong>コンテンツ例：</strong>先輩1日密着（職種別）/ 先輩後輩対談 / 同期座談会</p>
       </div>
       <div class="arrow-col">→</div>
-      <div class="phase-card fade-up stagger-3" style="border-top-color: var(--purple);">
-        <div class="phase-label" style="color: var(--purple);">Phase 3</div>
+      <div class="phase-card fade-up stagger-3" style="border-top-color: var(--blue);">
+        <div class="phase-label" style="color: var(--blue);">Phase 3</div>
         <h3>内定〜承諾</h3>
         <div class="phase-sub">〜不安の払拭〜</div>
         <p style="font-size:14px; margin-bottom:12px;"><strong>目的：</strong>待遇・環境など「最後に残る不安」を解消し、入社決断を後押しする</p>
@@ -1883,9 +1885,9 @@ footer p {
         <p style="font-size:14px; margin-bottom:4px;"><strong>施策</strong></p>
         <p style="font-size:14px;">採用コンセプト動画をHPとサンクスメールに活用。選考中〜内定期に動画を段階配信</p>
         <div style="margin-top:24px; padding-top:24px; border-top:1px solid rgba(255,255,255,0.1);">
-          <div class="result-number" style="color: var(--blue);">+15<span style="font-size:20px;">pt</span></div>
+          <div class="result-number" style="color: var(--teal);">+15<span style="font-size:20px;">pt</span></div>
           <div class="result-detail">説明会参加率 25%→40%</div>
-          <div class="result-number" style="color: var(--blue); margin-top:16px;">+19<span style="font-size:20px;">pt</span></div>
+          <div class="result-number" style="color: var(--teal); margin-top:16px;">+19<span style="font-size:20px;">pt</span></div>
           <div class="result-detail">選考応募率 16%→35%（＋50名）</div>
         </div>
       </div>
@@ -1899,9 +1901,9 @@ footer p {
         <p style="font-size:14px; margin-bottom:4px;"><strong>施策</strong></p>
         <p style="font-size:14px;">内定者向けポータルを開設し、先輩社員動画9本を内定後に段階配信。内定者の不安を払拭</p>
         <div style="margin-top:24px; padding-top:24px; border-top:1px solid rgba(255,255,255,0.1);">
-          <div class="result-number" style="color: var(--blue);">-30<span style="font-size:20px;">pt</span></div>
+          <div class="result-number" style="color: var(--teal);">-30<span style="font-size:20px;">pt</span></div>
           <div class="result-detail">内定辞退率 60%→30%</div>
-          <div class="result-number" style="color: var(--blue); margin-top:16px;">1,350<span style="font-size:20px;">万円</span></div>
+          <div class="result-number" style="color: var(--teal); margin-top:16px;">1,350<span style="font-size:20px;">万円</span></div>
           <div class="result-detail">コスト削減を達成</div>
         </div>
       </div>
@@ -1952,12 +1954,12 @@ footer p {
         </tr>
         <tr>
           <td>採用広報サーベイ</td>
-          <td style="font-weight:700; color:var(--blue);">無償提供</td>
+          <td style="font-weight:700; color:var(--teal);">無償提供</td>
           <td>自社の魅力抽出アンケート。動画企画テーマの策定に使用。社員向けサーベイツール提供。</td>
         </tr>
         <tr>
           <td>合計目安（初回値引き後）</td>
-          <td style="font-weight:700; color:var(--amber); font-size:22px;">230万円〜</td>
+          <td style="font-weight:700; color:var(--blue); font-size:22px;">230万円〜</td>
           <td>初回は撮影日集約・共通企画による効率化で大幅値引き適用。</td>
         </tr>
       </tbody>
@@ -2045,7 +2047,7 @@ footer p {
      ======================================== -->
 <section class="onboarding" id="onboarding">
   <div class="container">
-    <p class="section-label fade-up" style="color: var(--teal);">Getting Started</p>
+    <p class="section-label fade-up" style="color: var(--blue);">Getting Started</p>
     <h2 class="fade-up">かんたん3ステップ ＋ 導入スケジュール</h2>
     <p class="fade-up" style="max-width:700px; margin-bottom:56px;">「すぐ動ける・採用シーズンに間に合う」導入フロー。</p>
 
@@ -2150,7 +2152,7 @@ footer p {
       </div>
       <div class="fade-right">
         <h3 style="font-size:18px; margin-bottom:28px;">信頼性・実績</h3>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px;">
+        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-bottom:24px;">
           <div class="card" style="text-align:center; padding:28px;">
             <div class="kpi-number" style="font-size:40px; color:var(--blue);"><span class="counter" data-target="20">0</span><span style="font-size:16px;">社以上</span></div>
             <p style="font-size:13px; color:var(--gray-400); margin-bottom:0;">累計支援企業</p>
@@ -2160,12 +2162,8 @@ footer p {
             <p style="font-size:13px; color:var(--gray-400); margin-bottom:0;">支援実績</p>
           </div>
           <div class="card" style="text-align:center; padding:28px;">
-            <div class="kpi-number" style="font-size:40px; color:var(--teal);"><span class="counter" data-target="2020">0</span><span style="font-size:16px;">年</span></div>
+            <div class="kpi-number" style="font-size:40px; color:var(--blue);"><span class="counter" data-target="2020">0</span><span style="font-size:16px;">年</span></div>
             <p style="font-size:13px; color:var(--gray-400); margin-bottom:0;">設立</p>
-          </div>
-          <div class="card" style="text-align:center; padding:28px;">
-            <div class="kpi-number" style="font-size:40px; color:var(--purple);"><span class="counter" data-target="1500" data-separator="true">0</span><span style="font-size:16px;">万円</span></div>
-            <p style="font-size:13px; color:var(--gray-400); margin-bottom:0;">月商突破（2024年）</p>
           </div>
         </div>
       </div>
