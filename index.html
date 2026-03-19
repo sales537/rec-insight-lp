@@ -40,6 +40,7 @@
    REC Insight LP — Redesigned Design System
    ======================================== */
 :root {
+  /* ── 6-color palette: navy / blue / light-blue / slate-teal / white / gray ── */
   --navy: #0a0f1e;
   --navy-light: #131a2e;
   --navy-mid: #0f1629;
@@ -47,14 +48,16 @@
   --blue-dark: #2563eb;
   --blue-light: #60a5fa;
   --blue-glow: rgba(59, 130, 246, 0.3);
-  /* All accent colors mapped to blue family */
-  --teal: #3b82f6;
-  --teal-glow: rgba(59, 130, 246, 0.3);
-  --purple: #3b82f6;
-  --purple-glow: rgba(59, 130, 246, 0.3);
+  /* Accent: slate-teal — 紺と調和する落ち着いた青緑 */
+  --teal: #3b8fa6;
+  --teal-glow: rgba(59, 143, 166, 0.3);
+  /* Secondary accent: indigo — 紺の延長にある深い青紫 */
+  --purple: #6366f1;
+  --purple-glow: rgba(99, 102, 241, 0.3);
+  /* Mapped aliases (keep vars for compatibility) */
   --amber: #3b82f6;
   --amber-glow: rgba(59, 130, 246, 0.3);
-  --green: #3b82f6;
+  --green: #3b8fa6;
   --coral: #3b82f6;
   --gray-900: #111827;
   --gray-700: #374151;
@@ -64,10 +67,10 @@
   --gray-200: #e5e7eb;
   --gray-100: #f3f4f6;
   --gray-50: #f9fafb;
-  --teal-50: #eff6ff;
+  --teal-50: #f0f9fb;
   --amber-50: #eff6ff;
   --blue-50: #eff6ff;
-  --purple-50: #eff6ff;
+  --purple-50: #eef2ff;
   --white: #ffffff;
   --font-sans: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -96,7 +99,7 @@ body {
   background: var(--navy);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* Scroll Progress Bar */
@@ -105,7 +108,7 @@ body {
   top: 0;
   left: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--blue-dark), var(--blue), var(--blue-light));
+  background: linear-gradient(90deg, var(--blue-dark), var(--blue), var(--teal));
   z-index: 10000;
   transition: width 0.1s linear;
   border-radius: 0 2px 2px 0;
@@ -242,38 +245,20 @@ p { margin-bottom: 16px; }
   line-height: 1;
 }
 
-/* Animations */
-.fade-up {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
-}
-.fade-up.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* fade-left / fade-right now behave same as fade-up for clean appearance */
+/* Animations — opacity only, no transform to prevent layout shift */
+.fade-up,
 .fade-left,
-.fade-right {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
-}
-.fade-left.visible,
-.fade-right.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
+.fade-right,
 .scale-in {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
+  transition: opacity 0.6s ease-out;
+  will-change: opacity;
 }
+.fade-up.visible,
+.fade-left.visible,
+.fade-right.visible,
 .scale-in.visible {
   opacity: 1;
-  transform: translateY(0);
 }
 
 .stagger-1 { transition-delay: 0.1s; }
@@ -463,7 +448,7 @@ p { margin-bottom: 16px; }
 }
 .hero-orb-3 {
   width: 300px; height: 300px;
-  background: var(--blue-light);
+  background: var(--teal);
   top: 50%; left: 50%;
   animation-delay: -5s;
 }
@@ -488,10 +473,10 @@ p { margin-bottom: 16px; }
   animation: particleFloat linear infinite;
 }
 @keyframes particleFloat {
-  0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+  0% { transform: translateY(100vh); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(-100px); opacity: 0; }
 }
 
 .hero .container { position: relative; z-index: 1; }
@@ -505,7 +490,7 @@ p { margin-bottom: 16px; }
   letter-spacing: -0.03em;
 }
 .hero-catch .gradient-text {
-  background: linear-gradient(135deg, var(--blue-dark), var(--blue), var(--blue-light));
+  background: linear-gradient(135deg, var(--blue), var(--blue-light), var(--teal));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1583,7 +1568,7 @@ footer p {
      ======================================== -->
 <section class="challenges" id="challenges">
   <div class="container">
-    <p class="section-label fade-up" style="color: var(--blue);">Common Challenges</p>
+    <p class="section-label fade-up" style="color: var(--teal);">Common Challenges</p>
     <h2 class="fade-up">採用現場の4つの課題</h2>
     <p class="fade-up" style="margin-bottom:48px;">全業種に共通する、いま採用担当者が直面している構造的な課題。</p>
 
@@ -1656,13 +1641,13 @@ footer p {
      ======================================== -->
 <section class="product" id="product">
   <div class="container">
-    <p class="section-label fade-up" style="color: var(--blue);">Product</p>
+    <p class="section-label fade-up" style="color: var(--teal);">Product</p>
     <h2 class="fade-up">面接外がブラックボックスのまま、でいいですか？</h2>
     <p class="fade-up" style="max-width:750px; margin-bottom:16px;">「16本のショート動画」×「独自の視聴行動分析システム」。学生が誰の動画を、いつ、何秒見たか——その行動データが、言葉にならない本音を数字にします。</p>
 
     <div class="product-split">
       <div class="product-panel fade-left" style="color: var(--blue);">
-        <span class="badge" style="background: linear-gradient(135deg, var(--blue), var(--blue-dark)); color: var(--white);">学生側の体験</span>
+        <span class="badge" style="background: linear-gradient(135deg, var(--teal), #2a7a8f); color: var(--white);">学生側の体験</span>
         <h3>学生には「自分だけのページ」が届く</h3>
         <p style="color: var(--gray-400);">「吉田亮太 様へのコンテンツ」——個人名入りの限定ポータルがスマホに届きます。</p>
         <p style="color: var(--gray-400);">面接のように「見られている意識」がない状態で視聴するから、本音の行動が正確に記録されます。</p>
@@ -1752,16 +1737,16 @@ footer p {
         <p style="font-size:13px; color:var(--gray-400); margin-bottom:0;"><strong>コンテンツ例：</strong>会社説明会映像 / 数字で見る会社 / 社長インタビュー（理念編）</p>
       </div>
       <div class="arrow-col">→</div>
-      <div class="phase-card fade-up stagger-2" style="border-top-color: var(--blue);">
-        <div class="phase-label" style="color: var(--blue);">Phase 2</div>
+      <div class="phase-card fade-up stagger-2" style="border-top-color: var(--teal);">
+        <div class="phase-label" style="color: var(--teal);">Phase 2</div>
         <h3>選考中</h3>
         <div class="phase-sub">〜深く具体的に〜</div>
         <p style="font-size:14px; margin-bottom:12px;"><strong>目的：</strong>「働く自分」をイメージさせ、他社と差別化し面接での対話を深める</p>
         <p style="font-size:13px; color:var(--gray-400); margin-bottom:0;"><strong>コンテンツ例：</strong>先輩1日密着（職種別）/ 先輩後輩対談 / 同期座談会</p>
       </div>
       <div class="arrow-col">→</div>
-      <div class="phase-card fade-up stagger-3" style="border-top-color: var(--blue);">
-        <div class="phase-label" style="color: var(--blue);">Phase 3</div>
+      <div class="phase-card fade-up stagger-3" style="border-top-color: var(--purple);">
+        <div class="phase-label" style="color: var(--purple);">Phase 3</div>
         <h3>内定〜承諾</h3>
         <div class="phase-sub">〜不安の払拭〜</div>
         <p style="font-size:14px; margin-bottom:12px;"><strong>目的：</strong>待遇・環境など「最後に残る不安」を解消し、入社決断を後押しする</p>
@@ -1884,7 +1869,7 @@ footer p {
      ======================================== -->
 <section class="cases" id="cases">
   <div class="container">
-    <p class="section-label fade-up" style="color: var(--blue);">Case Studies</p>
+    <p class="section-label fade-up" style="color: var(--purple);">Case Studies</p>
     <h2 class="fade-up">導入事例（業界別ストーリー型）</h2>
     <p class="fade-up" style="max-width:700px; margin-bottom:56px;">「うちの業界でも使える」という確信を、具体的な数字でお見せします。</p>
 
@@ -1907,7 +1892,7 @@ footer p {
 
       <!-- Case 2 -->
       <div class="case-card fade-up stagger-2">
-        <span class="industry-badge" style="background: rgba(59,130,246,0.15); color: var(--blue);">金融・保険</span>
+        <span class="industry-badge" style="background: rgba(99,102,241,0.15); color: var(--purple);">金融・保険</span>
         <h3>金融・保険業界（従業員1,000名規模）</h3>
         <p style="font-size:14px; margin-bottom:4px;"><strong>課題</strong></p>
         <p style="font-size:14px;">内定辞退率が60%と高く、毎年多大な採用コストが発生していた</p>
@@ -2060,7 +2045,7 @@ footer p {
      ======================================== -->
 <section class="onboarding" id="onboarding">
   <div class="container">
-    <p class="section-label fade-up" style="color: var(--blue);">Getting Started</p>
+    <p class="section-label fade-up" style="color: var(--teal);">Getting Started</p>
     <h2 class="fade-up">かんたん3ステップ ＋ 導入スケジュール</h2>
     <p class="fade-up" style="max-width:700px; margin-bottom:56px;">「すぐ動ける・採用シーズンに間に合う」導入フロー。</p>
 
@@ -2179,7 +2164,7 @@ footer p {
             <p style="font-size:13px; color:var(--gray-400); margin-bottom:0;">設立</p>
           </div>
           <div class="card" style="text-align:center; padding:28px;">
-            <div class="kpi-number" style="font-size:40px; color:var(--amber);"><span class="counter" data-target="1500" data-separator="true">0</span><span style="font-size:16px;">万円</span></div>
+            <div class="kpi-number" style="font-size:40px; color:var(--purple);"><span class="counter" data-target="1500" data-separator="true">0</span><span style="font-size:16px;">万円</span></div>
             <p style="font-size:13px; color:var(--gray-400); margin-bottom:0;">月商突破（2024年）</p>
           </div>
         </div>
