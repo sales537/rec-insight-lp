@@ -536,18 +536,21 @@ p { margin-bottom: 16px; }
   line-height: 1.8;
 }
 .hero-stats {
-  display: flex;
-  gap: 24px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
   margin-bottom: 56px;
-  flex-wrap: wrap;
 }
+@media (max-width: 960px) { .hero-stats { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 640px) { .hero-stats { grid-template-columns: 1fr; } }
 .hero-stat {
-  background: rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 16px;
-  padding: 24px 32px;
+  border-radius: 14px;
+  padding: 20px 24px;
   backdrop-filter: blur(12px);
   transition: all 0.4s var(--ease-out-expo);
+  text-align: center;
 }
 .hero-stat:hover {
   background: rgba(255,255,255,0.1);
@@ -555,21 +558,23 @@ p { margin-bottom: 16px; }
   transform: translateY(-4px);
 }
 .hero-stat .label {
-  font-size: 13px;
+  font-size: 12px;
   color: rgba(255,255,255,0.45);
   margin-bottom: 8px;
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 .hero-stat .value {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 900;
   background: linear-gradient(135deg, var(--blue), var(--teal));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  line-height: 1.2;
 }
 .hero-stat .company {
-  font-size: 12px;
+  font-size: 11px;
   color: rgba(255,255,255,0.3);
   margin-top: 6px;
   font-weight: 500;
@@ -596,25 +601,36 @@ p { margin-bottom: 16px; }
   opacity: 0.3;
   pointer-events: none;
 }
+.challenges-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 960px) { .challenges-grid { grid-template-columns: 1fr; } }
 .challenge-card {
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  border-left: 4px solid;
-  border-radius: 16px;
-  padding: 36px 36px 36px 32px;
-  margin-bottom: 20px;
-  transition: all 0.5s var(--ease-out-expo);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 32px;
+  transition: all 0.4s var(--ease-out-expo);
   cursor: default;
+  position: relative;
 }
 .challenge-card:hover {
-  transform: translateX(8px);
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.12);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
 }
-.challenge-card h3 { font-size: 20px; margin-bottom: 10px; }
-.challenge-card p { font-size: 15px; color: var(--gray-400); margin-bottom: 0; line-height: 1.8; }
+.challenge-card .challenge-num {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gray-500);
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+.challenge-card h3 { font-size: 18px; margin-bottom: 10px; }
+.challenge-card p { font-size: 14px; color: var(--gray-400); margin-bottom: 0; line-height: 1.8; }
 
 .summary-band {
   background: linear-gradient(135deg, var(--navy), var(--navy-light));
@@ -658,23 +674,29 @@ p { margin-bottom: 16px; }
   opacity: 0.25;
   pointer-events: none;
 }
+.vision-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+@media (max-width: 960px) { .vision-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 640px) { .vision-grid { grid-template-columns: 1fr; } }
 .vision-card {
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  border-radius: 20px;
-  padding: 32px;
-  border-top: 4px solid;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 28px 24px;
   text-align: center;
-  transition: all 0.5s var(--ease-out-expo);
+  transition: all 0.4s var(--ease-out-expo);
 }
 .vision-card:hover {
-  transform: translateY(-8px);
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+  transform: translateY(-4px);
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.12);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
 }
-.vision-card p { font-size: 15px; color: var(--gray-300); margin-bottom: 0; font-weight: 500; }
+.vision-card h3 { font-size: 16px; margin-bottom: 8px; }
+.vision-card p { font-size: 14px; color: var(--gray-400); margin-bottom: 0; font-weight: 500; }
 
 /* ========================================
    SECTION 04 — Product
@@ -786,20 +808,18 @@ p { margin-bottom: 16px; }
   pointer-events: none;
 }
 .survey-card {
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  border-left: 4px solid var(--teal);
-  border-radius: 16px;
-  padding: 32px 32px 32px 28px;
-  margin-bottom: 20px;
-  transition: all 0.5s var(--ease-out-expo);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 28px 32px;
+  margin-bottom: 16px;
+  transition: all 0.4s var(--ease-out-expo);
 }
 .survey-card:hover {
-  transform: translateX(8px);
-  background: rgba(255,255,255,0.1);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  transform: translateY(-3px);
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.12);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
 }
 .survey-card h3 { font-size: 18px; }
 .survey-screens {
@@ -993,26 +1013,25 @@ p { margin-bottom: 16px; }
   color: var(--gray-400);
   border-bottom: 1px solid rgba(255,255,255,0.06);
   transition: all 0.3s;
+  display: flex;
+  align-items: center;
 }
 .dash-content .features li:hover { padding-left: 8px; color: var(--blue); }
 .dash-content .features li::before {
-  content: '';
-  display: inline-block;
-  width: 18px;
-  height: 18px;
-  margin-right: 8px;
+  content: '✓';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
   vertical-align: middle;
   background: linear-gradient(135deg, var(--blue), var(--teal));
   border-radius: 50%;
-  position: relative;
-}
-.dash-content .features li::after {
-  content: '✓';
-  position: relative;
-  left: -22px;
   color: white;
   font-size: 11px;
   font-weight: 900;
+  flex-shrink: 0;
 }
 /* ========================================
    SECTION 08 — Case Studies
@@ -1553,6 +1572,16 @@ footer p {
         <div class="value"><span class="counter" data-target="16">0</span>%→<span class="counter" data-target="35">0</span>%</div>
         <div class="company">自動車ディーラー B社</div>
       </div>
+      <div class="hero-stat">
+        <div class="label">説明会参加率</div>
+        <div class="value"><span class="counter" data-target="25">0</span>%→<span class="counter" data-target="40">0</span>%</div>
+        <div class="company">自動車ディーラー B社</div>
+      </div>
+      <div class="hero-stat">
+        <div class="label">コスト削減</div>
+        <div class="value"><span class="counter" data-target="1350" data-separator="true">0</span><span style="font-size:14px;">万円</span></div>
+        <div class="company">金融・保険業界 A社</div>
+      </div>
     </div>
     <div class="btn-group fade-up stagger-5">
       <a href="#final-cta" class="btn btn-primary">30分の無料ヒアリングを申し込む</a>
@@ -1570,24 +1599,30 @@ footer p {
     <h2 class="fade-up">採用現場の4つの課題</h2>
     <p class="fade-up" style="margin-bottom:48px;">全業種に共通する、いま採用担当者が直面している構造的な課題。</p>
 
-    <div class="challenge-card fade-up stagger-1" style="border-left-color: var(--coral);">
-      <h3>エントリーしたのに、来ない。</h3>
-      <p>学生が企業を8〜10社に厳選するようになり、エントリー後に興味を失うケースが急増。認知フェーズから魅力を届けられなければ、説明会の席は埋まらない時代です。</p>
-    </div>
+    <div class="challenges-grid">
+      <div class="challenge-card fade-up stagger-1">
+        <div class="challenge-num">01</div>
+        <h3>エントリーしたのに、来ない。</h3>
+        <p>学生が企業を8〜10社に厳選するようになり、エントリー後に興味を失うケースが急増。認知フェーズから魅力を届けられなければ、説明会の席は埋まらない時代です。</p>
+      </div>
 
-    <div class="challenge-card fade-up stagger-2" style="border-left-color: var(--blue);">
-      <h3>面接では、本音が見えない。</h3>
-      <p>生成AIでES・面接回答が均質化。表面的な受け答えで志望度を判断することが困難に。「なんとなく良さそう」で通過させた学生が翌週辞退する体験が、今の採用現場で急増しています。</p>
-    </div>
+      <div class="challenge-card fade-up stagger-2">
+        <div class="challenge-num">02</div>
+        <h3>面接では、本音が見えない。</h3>
+        <p>生成AIでES・面接回答が均質化。表面的な受け答えで志望度を判断することが困難に。「なんとなく良さそう」で通過させた学生が翌週辞退する体験が、今の採用現場で急増しています。</p>
+      </div>
 
-    <div class="challenge-card fade-up stagger-3" style="border-left-color: var(--purple);">
-      <h3>なぜ辞退されたのか、分からない。</h3>
-      <p>辞退は面接と面接の間に起きています。合否を待つ2週間、学生の気持ちは動いています。理由も分からないまま、辞退が繰り返されます。</p>
-    </div>
+      <div class="challenge-card fade-up stagger-3">
+        <div class="challenge-num">03</div>
+        <h3>なぜ辞退されたのか、分からない。</h3>
+        <p>辞退は面接と面接の間に起きています。合否を待つ2週間、学生の気持ちは動いています。理由も分からないまま、辞退が繰り返されます。</p>
+      </div>
 
-    <div class="challenge-card fade-up stagger-4" style="border-left-color: var(--amber);">
-      <h3>毎年、リセットされる採用。</h3>
-      <p>媒体・エージェント頼りではデータが自社に残りません。なぜ採れたか・なぜ失敗したかの理由が分からないまま、来年も同じ予算を同じ場所に投じ続けます。採用の成功体験が、組織に積み上がらない構造です。</p>
+      <div class="challenge-card fade-up stagger-4">
+        <div class="challenge-num">04</div>
+        <h3>毎年、リセットされる採用。</h3>
+        <p>媒体・エージェント頼りではデータが自社に残りません。なぜ採れたか・なぜ失敗したかの理由が分からないまま、来年も同じ予算を同じ場所に投じ続けます。採用の成功体験が、組織に積み上がらない構造です。</p>
+      </div>
     </div>
   </div>
 
@@ -1605,19 +1640,21 @@ footer p {
     <h2 class="fade-up">「採用したい人が、来る採用」へ。</h2>
     <p class="fade-up" style="max-width:700px; margin-bottom:56px;">条件や待遇の打ち出しだけでは、もう選ばれない。自社で働くことへの「共感」が、内定承諾の決め手になっています。</p>
 
-    <div class="bento-grid">
-      <div class="vision-card bento-wide fade-up scale-in stagger-1" style="border-top-color: var(--blue);">
-        <h3 style="font-size:18px;">自社に本当に合う人材が、説明会に来ている</h3>
+    <div class="vision-grid">
+      <div class="vision-card fade-up scale-in stagger-1">
+        <h3>共感で集まる母集団</h3>
         <p>条件や知名度ではなく「共感」で集まる母集団を形成。ミスマッチのない採用が実現します。</p>
       </div>
-      <div class="vision-card fade-up scale-in stagger-2" style="border-top-color: var(--teal);">
-        <p>内定を出したら、迷わず承諾される</p>
+      <div class="vision-card fade-up scale-in stagger-2">
+        <h3>迷わず承諾される内定</h3>
+        <p>内定を出したら、迷わず承諾される。入社前から企業理解が深まっている状態をつくります。</p>
       </div>
-      <div class="vision-card fade-up scale-in stagger-3" style="border-top-color: var(--purple);">
-        <p>入社後に活躍し、長く働いてくれる</p>
+      <div class="vision-card fade-up scale-in stagger-3">
+        <h3>入社後も活躍・定着</h3>
+        <p>入社後に活躍し、長く働いてくれる。採用段階でのマッチ精度が定着率に直結します。</p>
       </div>
-      <div class="vision-card bento-wide fade-up scale-in stagger-4" style="border-top-color: var(--amber);">
-        <h3 style="font-size:18px;">採用ノウハウが社内に積み上がる</h3>
+      <div class="vision-card fade-up scale-in stagger-4">
+        <h3>ノウハウが積み上がる</h3>
         <p>担当者が変わっても、データと仕組みが残る。属人化しない採用体制を構築できます。</p>
       </div>
     </div>
@@ -1652,8 +1689,8 @@ footer p {
     </div>
 
     <h3 class="fade-up" style="text-align:center; margin-bottom:12px;">3つの価値</h3>
-    <div class="bento-grid" style="grid-template-columns: repeat(3, 1fr);">
-      <div class="value-item bento-wide fade-up scale-in stagger-1" style="grid-column: span 2;">
+    <div class="value-grid">
+      <div class="value-item fade-up scale-in stagger-1">
         <div class="num">01</div>
         <h3 style="font-size:16px;">採用ファネル全体が見える</h3>
         <p>認知→承諾まで採用の漏れ箇所を一画面で把握。どこで学生が離脱しているか一目瞭然。</p>
@@ -1663,7 +1700,7 @@ footer p {
         <h3 style="font-size:16px;">本音と建前のギャップが分かる</h3>
         <p>「理念重視」と言いながら条件動画を最も見ている実態が判明</p>
       </div>
-      <div class="value-item fade-up scale-in stagger-3" style="grid-column: span 3;">
+      <div class="value-item fade-up scale-in stagger-3">
         <div class="num">03</div>
         <h3 style="font-size:16px;">採用ノウハウが積み上がる</h3>
         <p>担当者が変わってもデータが引き継がれる。媒体費・エージェント費と違い、投資するたびに自社に資産が蓄積されます。</p>
