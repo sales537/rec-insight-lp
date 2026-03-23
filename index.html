@@ -220,7 +220,188 @@ p { margin-bottom: 16px; }
   line-height: 1;
 }
 
-/* Animations disabled — all elements visible immediately */
+/* ========================================
+   ANIMATIONS — Safe: transform + opacity only
+   ======================================== */
+
+/* Scroll fade-in */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fade-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.fade-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.fade-right {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.fade-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.scale-in {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.scale-in.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Stagger delays */
+.stagger-1 { transition-delay: 0.1s; }
+.stagger-2 { transition-delay: 0.2s; }
+.stagger-3 { transition-delay: 0.3s; }
+.stagger-4 { transition-delay: 0.4s; }
+.stagger-5 { transition-delay: 0.5s; }
+
+/* Hover — transform + opacity + box-shadow only (no background transition) */
+.btn {
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+}
+.btn:active {
+  transform: translateY(-1px);
+}
+
+.card,
+.challenge-card,
+.vision-card,
+.survey-card,
+.phase-card,
+.product-panel,
+.value-item,
+.screen-placeholder,
+.step-card,
+.case-card,
+.asset-card,
+.dash-item,
+.hero-stat {
+  transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
+}
+.card:hover,
+.challenge-card:hover,
+.vision-card:hover,
+.survey-card:hover,
+.phase-card:hover,
+.product-panel:hover,
+.value-item:hover,
+.screen-placeholder:hover,
+.step-card:hover,
+.case-card:hover,
+.asset-card:hover,
+.dash-item:hover,
+.hero-stat:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+}
+
+.dash-screen {
+  transition: transform 0.4s ease-out;
+}
+.dash-screen:hover {
+  transform: scale(1.02);
+}
+
+.btn-white {
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+.btn-white:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+}
+.btn-white-outline {
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+.btn-white-outline:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+}
+
+/* Nav link hover — color only */
+.nav-link {
+  transition: color 0.3s ease-out, opacity 0.3s ease-out;
+}
+.nav-link:hover {
+  color: var(--white);
+}
+.navbar-brand {
+  transition: opacity 0.3s ease-out;
+}
+.navbar-brand:hover {
+  opacity: 0.8;
+}
+
+/* Navbar scroll state */
+.navbar {
+  transition: box-shadow 0.3s ease-out;
+}
+.navbar.scrolled {
+  box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+}
+
+/* Scroll progress bar */
+.scroll-progress {
+  transition: width 0.1s linear;
+}
+
+/* FAQ summary hover */
+.faq-item summary {
+  transition: color 0.3s ease-out;
+}
+.faq-item summary:hover {
+  color: var(--blue);
+}
+
+/* Logo hover */
+.logo-band .logos span {
+  transition: opacity 0.3s ease-out;
+}
+.logo-band .logos span:hover {
+  opacity: 1;
+  color: var(--white);
+}
+
+/* Dashboard features list hover */
+.dash-content .features li {
+  transition: transform 0.3s ease-out;
+}
+.dash-content .features li:hover {
+  transform: translateX(8px);
+}
+
+/* Timeline hover */
+.timeline li {
+  transition: transform 0.3s ease-out;
+}
+.timeline li:hover {
+  transform: translateX(12px);
+}
+
+/* Pricing table row hover */
+.pricing-table tr:hover td {
+  background: rgba(59, 130, 246, 0.04);
+}
+.compare-table tr:hover td {
+  background: rgba(59, 130, 246, 0.03);
+}
 
 /* Responsive */
 @media (max-width: 960px) {
@@ -1228,8 +1409,8 @@ footer p {
 </style>
 </head>
 <body>
-<!-- Scroll Progress — disabled -->
-<!-- <div class="scroll-progress" id="scrollProgress"></div> -->
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
 
 <!-- ========================================
      NAVBAR
@@ -1948,19 +2129,95 @@ footer p {
 (function() {
   'use strict';
 
-  // --- Set all counters to their final value immediately (no animation) ---
-  document.querySelectorAll('.counter').forEach(function(el) {
-    var target = el.dataset.target;
-    var isDecimal = el.dataset.decimal === 'true';
-    var hasSeparator = el.dataset.separator === 'true';
-    if (isDecimal) {
-      el.textContent = parseFloat(target).toFixed(1);
-    } else if (hasSeparator) {
-      el.textContent = parseInt(target).toLocaleString();
+  // --- Scroll Progress Bar ---
+  var progressBar = document.getElementById('scrollProgress');
+  function updateProgress() {
+    var scrollTop = window.scrollY;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    if (docHeight > 0) {
+      progressBar.style.width = (scrollTop / docHeight) * 100 + '%';
+    }
+  }
+
+  // --- Navbar scroll effect ---
+  var navbar = document.getElementById('navbar');
+  function updateNavbar() {
+    if (window.scrollY > 100) {
+      navbar.classList.add('scrolled');
     } else {
-      el.textContent = target;
+      navbar.classList.remove('scrolled');
+    }
+  }
+
+  // --- Combined scroll handler (throttled via rAF) ---
+  var ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        updateProgress();
+        updateNavbar();
+        ticking = false;
+      });
+      ticking = true;
     }
   });
+
+  // --- Intersection Observer for scroll fade-in ---
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+
+        // Trigger counter animation for counters inside this element
+        var counters = entry.target.querySelectorAll('.counter');
+        counters.forEach(function(counter) {
+          if (counter.dataset.animated) return;
+          counter.dataset.animated = 'true';
+          animateCounter(counter);
+        });
+
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.fade-up, .fade-left, .fade-right, .scale-in').forEach(function(el) {
+    observer.observe(el);
+  });
+
+  // --- Counter Animation ---
+  function animateCounter(el) {
+    var target = parseFloat(el.dataset.target);
+    var isDecimal = el.dataset.decimal === 'true';
+    var hasSeparator = el.dataset.separator === 'true';
+    var duration = 2000;
+    var start = performance.now();
+
+    function easeOutExpo(t) {
+      return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+    }
+
+    function update(now) {
+      var elapsed = now - start;
+      var progress = Math.min(elapsed / duration, 1);
+      var eased = easeOutExpo(progress);
+      var current = eased * target;
+
+      if (isDecimal) {
+        el.textContent = current.toFixed(1);
+      } else if (hasSeparator) {
+        el.textContent = Math.floor(current).toLocaleString();
+      } else {
+        el.textContent = Math.floor(current);
+      }
+
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      }
+    }
+
+    requestAnimationFrame(update);
+  }
 
   // --- Mobile nav toggle ---
   var navToggle = document.getElementById('navToggle');
