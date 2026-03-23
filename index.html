@@ -262,6 +262,15 @@ p { margin-bottom: 16px; }
   transform: scale(1);
 }
 
+/* Hero section — NO animations at all (prevents jitter on initial load) */
+.hero * {
+  transition: none !important;
+  transform: none !important;
+}
+.hero .container {
+  transform: none !important;
+}
+
 /* Stagger delays */
 .stagger-1 { transition-delay: 0.1s; }
 .stagger-2 { transition-delay: 0.2s; }
@@ -292,8 +301,7 @@ p { margin-bottom: 16px; }
 .step-card,
 .case-card,
 .asset-card,
-.dash-item,
-.hero-stat {
+.dash-item {
   transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
 }
 .card:hover,
@@ -307,8 +315,7 @@ p { margin-bottom: 16px; }
 .step-card:hover,
 .case-card:hover,
 .asset-card:hover,
-.dash-item:hover,
-.hero-stat:hover {
+.dash-item:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 40px rgba(0,0,0,0.25);
 }
@@ -535,7 +542,6 @@ p { margin-bottom: 16px; }
   min-height: 100vh;
   display: flex;
   align-items: center;
-  transform: translateZ(0);
 }
 .hero::before {
   content: '';
@@ -545,7 +551,6 @@ p { margin-bottom: 16px; }
     linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
   background-size: 80px 80px;
-  transform: translateZ(0);
 }
 
 /* Floating orbs — use radial-gradient instead of filter:blur to prevent text jitter */
@@ -1446,11 +1451,11 @@ footer p {
   <div class="particles" id="particles"></div>
 
   <div class="container">
-    <p class="section-label fade-up" style="color: var(--blue);">REC Insight</p>
-    <h1 class="hero-catch fade-up stagger-1">採用の、<span class="gradient-text">ブラックボックス</span>を<br>なくす。</h1>
-    <p class="hero-sub fade-up stagger-2">なぜ来ない、なぜ辞退する、なぜ選ばれない——<br>その答えが、学生の行動データにあります。</p>
-    <p class="hero-body fade-up stagger-3">REC Insightは「ショート動画 × 視聴行動分析」で、面接外の学生の本音を数字にする採用ソリューションです。母集団形成・選考歩留まり・内定辞退——採用のあらゆるフェーズの課題に対応します。</p>
-    <div class="hero-stats fade-up stagger-4">
+    <p class="section-label" style="color: var(--blue);">REC Insight</p>
+    <h1 class="hero-catch">採用の、<span class="gradient-text">ブラックボックス</span>を<br>なくす。</h1>
+    <p class="hero-sub">なぜ来ない、なぜ辞退する、なぜ選ばれない——<br>その答えが、学生の行動データにあります。</p>
+    <p class="hero-body">REC Insightは「ショート動画 × 視聴行動分析」で、面接外の学生の本音を数字にする採用ソリューションです。母集団形成・選考歩留まり・内定辞退——採用のあらゆるフェーズの課題に対応します。</p>
+    <div class="hero-stats">
       <div class="hero-stat">
         <div class="label">内定辞退率</div>
         <div class="value"><span class="counter" data-target="60">0</span>%→<span class="counter" data-target="30">0</span>%</div>
@@ -1472,7 +1477,7 @@ footer p {
         <div class="company">金融・保険業界</div>
       </div>
     </div>
-    <div class="btn-group fade-up stagger-5">
+    <div class="btn-group">
       <a href="#final-cta" class="btn btn-primary">まずは無料で相談する</a>
       <a href="#" class="btn btn-secondary">資料をダウンロードする</a>
     </div>
@@ -2159,6 +2164,21 @@ footer p {
         ticking = false;
       });
       ticking = true;
+    }
+  });
+
+  // --- Hero counters: set final value immediately (no animation in hero) ---
+  document.querySelectorAll('.hero .counter').forEach(function(el) {
+    var target = el.dataset.target;
+    var isDecimal = el.dataset.decimal === 'true';
+    var hasSeparator = el.dataset.separator === 'true';
+    el.dataset.animated = 'true';
+    if (isDecimal) {
+      el.textContent = parseFloat(target).toFixed(1);
+    } else if (hasSeparator) {
+      el.textContent = parseInt(target).toLocaleString();
+    } else {
+      el.textContent = target;
     }
   });
 
