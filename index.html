@@ -23,13 +23,649 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Murecho:wght@400;500;700;900&family=IBM+Plex+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;500;700;900&family=Shippori+Mincho:wght@400;500;700;900&family=M+PLUS+1p:wght@400;500;700;900&display=swap" rel="stylesheet">
 
 <style>
 /* ============================================================
    REC Insight LP — Light Blue / White Refresh
    Tokens
    ============================================================ */
+
+/* ============================================================
+   SaaS REFRESH OVERRIDE — Phase 1 (装飾削除・タイポ強化・配色整理)
+   ============================================================ */
+.global-bg-layer,
+.bg-deco,
+.section-wave-top,
+.section-wave-bottom,
+.hero-wave-deco,
+.hero-wave-cut {
+  display: none !important;
+}
+/* セクション透過解除 → 純白ベース、薄グレーで区切り */
+.challenges, .what, .benefits, .flow, .core, .compare, .comms, .pricing {
+  background-color: #ffffff !important;
+}
+/* フラットSVGアイコンの基本スタイル */
+.flat-ico {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.feat-thumb .flat-ico {
+  width: 56px;
+  height: 56px;
+}
+/* visual枠の背景を控えめに */
+.core-card .visual {
+  background: #f8fafc !important;
+  background-image: none !important;
+}
+
+/* ============================================================
+   KPI BAR
+   ============================================================ */
+.kpi-bar {
+  padding: 56px 0;
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+}
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+.kpi {
+  text-align: center;
+  padding: 8px 18px;
+  position: relative;
+}
+.kpi + .kpi::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 14%;
+  height: 72%;
+  width: 1px;
+  background: #e2e8f0;
+}
+.kpi-num {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 56px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #0f172a;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+.kpi-num .kpi-unit {
+  font-size: 22px;
+  font-weight: 700;
+  color: #64748b;
+  margin-left: 4px;
+  letter-spacing: 0;
+}
+.kpi-label {
+  display: block;
+  font-size: 13px;
+  color: #475569;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+@media (max-width: 880px) {
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 28px 0; }
+  .kpi-num { font-size: 40px; }
+  .kpi:nth-child(odd)::before { display: none; }
+}
+
+/* ============================================================
+   LOGO STRIP
+   ============================================================ */
+.logo-strip {
+  padding: 56px 0 64px;
+  background: #f7f9fc;
+}
+.logo-strip-label {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.16em;
+  margin-bottom: 28px;
+  text-transform: uppercase;
+}
+.logo-strip-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 24px;
+  align-items: center;
+}
+.logo-ph {
+  height: 48px;
+  display: grid;
+  place-items: center;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  color: #94a3b8;
+  letter-spacing: 0.08em;
+  transition: all .2s;
+}
+.logo-ph:hover {
+  border-color: #cbd5e1;
+  color: #64748b;
+}
+@media (max-width: 880px) {
+  .logo-strip-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+}
+
+/* ============================================================
+   PRODUCT UI MOCK
+   ============================================================ */
+.product-ui {
+  padding: 96px 0 88px;
+  background: linear-gradient(180deg, #f7f9fc 0%, #ffffff 100%);
+}
+.product-ui-lead {
+  text-align: center;
+  font-size: 15px;
+  color: #475569;
+  line-height: 1.85;
+  max-width: 720px;
+  margin: 14px auto 40px;
+}
+.product-ui-frame {
+  background: #ffffff;
+  border: 1px solid #d1d9e6;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px -24px rgba(15, 23, 42, 0.20),
+              0 8px 24px -12px rgba(15, 23, 42, 0.10);
+  max-width: 1080px;
+  margin: 0 auto;
+}
+.ui-chrome {
+  background: #f1f5f9;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ui-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.ui-dot-r { background: #ef4444; }
+.ui-dot-y { background: #f59e0b; }
+.ui-dot-g { background: #10b981; }
+.ui-url {
+  margin-left: 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: #64748b;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 4px 12px;
+}
+.ui-body {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+}
+.ui-side {
+  background: #fafbfd;
+  border-right: 1px solid #e2e8f0;
+  padding: 18px 14px;
+}
+.ui-side-brand {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+  margin-bottom: 18px;
+  padding: 0 8px;
+}
+.ui-side-brand span { color: #1d4ed8; margin: 0 2px; }
+.ui-side-nav { display: flex; flex-direction: column; gap: 2px; }
+.ui-nav {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #475569;
+  cursor: default;
+}
+.ui-nav.active {
+  background: #eaf2ff;
+  color: #1d4ed8;
+  font-weight: 700;
+}
+.ui-nav-ico {
+  width: 14px;
+  height: 14px;
+  background: currentColor;
+  opacity: 0.5;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.ui-nav.active .ui-nav-ico { opacity: 1; background: #1d4ed8; }
+.ui-main {
+  padding: 22px 24px 24px;
+}
+.ui-main-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.ui-main-head h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+}
+.ui-period {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 500;
+  margin-left: 8px;
+}
+.ui-pill {
+  font-size: 10px;
+  font-weight: 700;
+  color: #047857;
+  background: #d1fae5;
+  padding: 4px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+  position: relative;
+  padding-left: 18px;
+}
+.ui-pill::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  animation: ui-pulse 1.6s ease-in-out infinite;
+}
+@keyframes ui-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.ui-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.ui-kpi {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+.ui-kpi-l {
+  display: block;
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.ui-kpi-v {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+.ui-kpi-v small {
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  margin-left: 1px;
+}
+.ui-kpi-d {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+}
+.ui-kpi-d.up { color: #059669; }
+.ui-kpi-d.down { color: #dc2626; }
+
+.ui-graph-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.ui-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+.ui-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.ui-card-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0f172a;
+}
+.ui-card-tag {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  color: #94a3b8;
+}
+.ui-chart {
+  width: 100%;
+  height: 130px;
+  display: block;
+}
+
+.ui-rank {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ui-rank li {
+  display: grid;
+  grid-template-columns: 22px 1fr auto;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 4px;
+  border-bottom: 1px dashed #f1f5f9;
+  font-size: 11px;
+}
+.ui-rank li:last-child { border-bottom: 0; }
+.ui-rank-n {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 12px;
+  color: #1d4ed8;
+  text-align: center;
+}
+.ui-rank-t {
+  color: #334155;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ui-rank-v {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.ui-axis-card { margin-top: 0; }
+.ui-axis-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ui-axis-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 50px;
+  align-items: center;
+  gap: 12px;
+}
+.ui-axis-l {
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+}
+.ui-axis-bar {
+  height: 8px;
+  background: #f1f5f9;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.ui-axis-bar > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+  border-radius: 4px;
+}
+.ui-axis-v {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1d4ed8;
+  text-align: right;
+}
+
+.product-ui-note {
+  text-align: center;
+  font-size: 11px;
+  color: #94a3b8;
+  margin-top: 20px;
+}
+
+/* ============================================================
+   CASE STUDIES
+   ============================================================ */
+.cases {
+  padding: 96px 0;
+  background: #ffffff;
+}
+.cases-lead {
+  text-align: center;
+  font-size: 15px;
+  color: #475569;
+  line-height: 1.95;
+  max-width: 760px;
+  margin: 14px auto 48px;
+}
+.cases-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.case-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 28px 26px 24px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 8px -4px rgba(15, 23, 42, 0.06);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.case-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px -12px rgba(15, 23, 42, 0.14);
+  border-color: #cbd5e1;
+}
+.case-quote-mark {
+  position: absolute;
+  top: 14px;
+  right: 22px;
+  font-family: 'Inter', serif;
+  font-size: 64px;
+  color: #dbeafe;
+  line-height: 1;
+  font-weight: 800;
+}
+.case-body {
+  font-size: 14px;
+  line-height: 1.95;
+  color: #334155;
+  margin: 0 0 22px;
+  font-weight: 500;
+  flex: 1;
+}
+.case-body strong {
+  color: #0f172a;
+  font-weight: 700;
+  background: linear-gradient(transparent 60%, #fef3c7 60%);
+  padding: 0 2px;
+}
+.case-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 18px;
+  border-top: 1px solid #f1f5f9;
+  margin-bottom: 16px;
+}
+.case-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.case-avatar svg { width: 100%; height: 100%; display: block; }
+.case-who {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+.case-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+}
+.case-role {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+}
+.case-co {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  color: #94a3b8;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  margin-top: 2px;
+}
+.case-result {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  background: #f7f9fc;
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+.case-result-l {
+  font-size: 12px;
+  color: #475569;
+  font-weight: 600;
+}
+.case-result-v {
+  font-family: 'Inter', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: #1d4ed8;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.case-result-v small {
+  font-size: 16px;
+  font-weight: 700;
+  margin-left: 1px;
+}
+.cases-note {
+  text-align: center;
+  font-size: 11px;
+  color: #94a3b8;
+  margin-top: 32px;
+}
+@media (max-width: 880px) {
+  .cases-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 880px) {
+  .ui-body { grid-template-columns: 1fr; }
+  .ui-side { display: none; }
+  .ui-kpi-row { grid-template-columns: repeat(2, 1fr); }
+  .ui-graph-row { grid-template-columns: 1fr; }
+  .ui-main { padding: 16px; }
+}
+.challenges::before, .what::before, .benefits::before, .flow::before,
+.core::before, .compare::before, .comms::before, .pricing::before {
+  display: none !important;
+}
+/* 偶数番セクションだけ薄いグレーに（罫線代わりのリズム） */
+.challenges, .benefits, .compare, .pricing {
+  background-color: #f7f9fc !important;
+}
+.what, .core, .flow, .comms {
+  background-color: #ffffff !important;
+}
+/* hero背景もシンプルに（青グラデ→白） */
+.hero {
+  background: #ffffff !important;
+}
+/* eyebrow英字をかなり弱める */
+.section-eyebrow {
+  font-size: 11px !important;
+  color: #94a3b8 !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.18em !important;
+  margin-bottom: 14px !important;
+}
+/* セクション見出しを太く・大きく・濃く（SaaS定番） */
+.section-title {
+  font-size: 38px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.01em !important;
+  color: #0f172a !important;
+  line-height: 1.35 !important;
+}
+.section-title .lead {
+  color: #0f172a !important;
+  background: none !important;
+  -webkit-text-fill-color: initial !important;
+}
+@media (max-width: 880px) {
+  .section-title { font-size: 28px !important; }
+}
+/* 青グラデバッジを単色に（番号バッジ系） */
+.core-card .num,
+.benefit .num,
+.ch-num,
+.feature-card .feat-num,
+.step-num {
+  background: #1d4ed8 !important;
+  background-image: none !important;
+}
+/* カードのボーダーをはっきり、シャドウは弱める（SaaS定番） */
+.core-card, .benefit, .compare-table, .price-table {
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+}
+
 :root {
   --c-ink: #0f172a;
   --c-ink-2: #1e293b;
@@ -2366,7 +3002,7 @@ footer .meta { font-size: 11px; }
   transform: translateY(20px);
   transition: opacity .7s ease, transform .7s ease;
 }
-.reveal.in { opacity: 1; transform: translateY(0); }
+.reveal.in { opacity: 1 !important; transform: translateY(0) !important; }
 
 /* ============================================================
    Responsive small screens
@@ -2476,6 +3112,49 @@ footer .meta { font-size: 11px; }
   <!-- 提供素材の青波装飾 - ヒーロー下部 -->
   <img class="hero-wave-deco" src="assets/decoration_wave.png" alt="" aria-hidden="true">
   <div class="hero-wave-cut" aria-hidden="true"></div>
+</section>
+
+<!-- ============================================================
+     KPI BAR — ヒーロー直下、数字で訴求
+     ============================================================ -->
+<section class="kpi-bar">
+  <div class="container">
+    <div class="kpi-grid">
+      <div class="kpi">
+        <span class="kpi-num">4<span class="kpi-unit">軸</span></span>
+        <span class="kpi-label">採用広報の構造化フレーム</span>
+      </div>
+      <div class="kpi">
+        <span class="kpi-num">16<span class="kpi-unit">本</span></span>
+        <span class="kpi-label">ショート動画を制作・配信</span>
+      </div>
+      <div class="kpi">
+        <span class="kpi-num">100<span class="kpi-unit">%</span></span>
+        <span class="kpi-label">視聴ログをトラッキング</span>
+      </div>
+      <div class="kpi">
+        <span class="kpi-num">0<span class="kpi-unit">円</span></span>
+        <span class="kpi-label">採用広報サーベイは無償提供</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LOGO STRIP — 顧客ロゴ列（プレースホルダー）
+     ============================================================ -->
+<section class="logo-strip">
+  <div class="container">
+    <p class="logo-strip-label">先進企業の採用広報DXを支援</p>
+    <div class="logo-strip-grid">
+      <div class="logo-ph">COMPANY A</div>
+      <div class="logo-ph">COMPANY B</div>
+      <div class="logo-ph">COMPANY C</div>
+      <div class="logo-ph">COMPANY D</div>
+      <div class="logo-ph">COMPANY E</div>
+      <div class="logo-ph">COMPANY F</div>
+    </div>
+  </div>
 </section>
 
 <!-- ============================================================
@@ -2612,7 +3291,12 @@ footer .meta { font-size: 11px; }
       <div class="what-feats">
         <div class="feat reveal">
           <div class="feat-thumb">
-            <img src="assets/icon_database_chart.png" alt="視聴ログの完全トラッキング">
+            <svg class="flat-ico" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+              <ellipse cx="32" cy="16" rx="18" ry="6" stroke="#1d4ed8" stroke-width="2" fill="#eff6ff"/>
+              <path d="M14 16v12c0 3.3 8 6 18 6s18-2.7 18-6V16" stroke="#1d4ed8" stroke-width="2" fill="none"/>
+              <path d="M14 28v12c0 3.3 8 6 18 6s18-2.7 18-6V28" stroke="#1d4ed8" stroke-width="2" fill="none"/>
+              <path d="M14 40v6c0 3.3 8 6 18 6s18-2.7 18-6v-6" stroke="#1d4ed8" stroke-width="2" fill="none"/>
+            </svg>
           </div>
           <div>
             <h3>視聴ログの完全トラッキング</h3>
@@ -2621,7 +3305,14 @@ footer .meta { font-size: 11px; }
         </div>
         <div class="feat reveal">
           <div class="feat-thumb">
-            <img src="assets/icon_chart_growth.png" alt="歩留まり率の最大化">
+            <svg class="flat-ico" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+              <path d="M8 56h48" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round"/>
+              <rect x="14" y="40" width="7" height="16" rx="1" fill="#dbeafe"/>
+              <rect x="26" y="30" width="7" height="26" rx="1" fill="#3b82f6"/>
+              <rect x="38" y="20" width="7" height="36" rx="1" fill="#1d4ed8"/>
+              <path d="M12 22l10-6 8 4 12-8 14 6" stroke="#1d4ed8" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M50 12l6 2-2 6" stroke="#1d4ed8" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
           <div>
             <h3>歩留まり率の最大化</h3>
@@ -2652,7 +3343,24 @@ footer .meta { font-size: 11px; }
           <h3>採用広報サーベイ<br><span style="color:var(--c-primary-d);font-size:13px;">（無償提供）</span></h3>
         </div>
         <div class="visual">
-          <img src="assets/icon_core_video.png" alt="採用広報サーベイ">
+          <svg class="flat-ico" viewBox="0 0 200 130" fill="none" aria-hidden="true">
+            <!-- サーベイクリップボード（3つの評価代わりのバーチャート） -->
+            <rect x="30" y="22" width="140" height="86" rx="6" stroke="#1d4ed8" stroke-width="1.6" fill="#fff"/>
+            <rect x="42" y="34" width="58" height="6" rx="3" fill="#dbeafe"/>
+            <rect x="42" y="46" width="40" height="4" rx="2" fill="#e2e8f0"/>
+            <!-- bars -->
+            <rect x="42" y="86" width="14" height="14" rx="2" fill="#1d4ed8"/>
+            <rect x="60" y="76" width="14" height="24" rx="2" fill="#3b82f6"/>
+            <rect x="78" y="66" width="14" height="34" rx="2" fill="#1d4ed8"/>
+            <rect x="96" y="58" width="14" height="42" rx="2" fill="#3b82f6"/>
+            <!-- stars line -->
+            <g fill="#facc15" transform="translate(118,40)">
+              <path d="M0 0l2 4 4 .4-3 2.8.8 4.2L0 9.4l-3.8 2 .8-4.2-3-2.8 4-.4z"/>
+              <path d="M14 0l2 4 4 .4-3 2.8.8 4.2L14 9.4l-3.8 2 .8-4.2-3-2.8 4-.4z"/>
+              <path d="M28 0l2 4 4 .4-3 2.8.8 4.2L28 9.4l-3.8 2 .8-4.2-3-2.8 4-.4z"/>
+              <path d="M42 0l2 4 4 .4-3 2.8.8 4.2L42 9.4l-3.8 2 .8-4.2-3-2.8 4-.4z" fill="#cbd5e1"/>
+            </g>
+          </svg>
         </div>
         <p>若手社員に5段階評価＋自由記述アンケートを配信。<strong>4軸スコアが自動集計</strong>され、動画テーマが数字で決まります。</p>
       </div>
@@ -2663,7 +3371,39 @@ footer .meta { font-size: 11px; }
           <h3>16本のショート動画制作対応</h3>
         </div>
         <div class="visual">
-          <img src="assets/icon_core_database.png" alt="16項目のショート動画制作">
+          <svg class="flat-ico" viewBox="0 0 200 130" fill="none" aria-hidden="true">
+            <!-- 16本の動画グリッド（4x4） -->
+            <g>
+              <!-- 4x4 mini phone screens -->
+              <g transform="translate(20,18)">
+                <rect width="30" height="50" rx="4" fill="#fff" stroke="#1d4ed8" stroke-width="1.6"/>
+                <rect x="4" y="6" width="22" height="28" rx="2" fill="#eff6ff"/>
+                <polygon points="13,16 13,24 19,20" fill="#1d4ed8"/>
+                <rect x="4" y="38" width="22" height="3" rx="1.5" fill="#cbd5e1"/>
+                <rect x="4" y="44" width="14" height="3" rx="1.5" fill="#cbd5e1"/>
+              </g>
+              <g transform="translate(60,18)">
+                <rect width="30" height="50" rx="4" fill="#fff" stroke="#cbd5e1" stroke-width="1.6"/>
+                <rect x="4" y="6" width="22" height="28" rx="2" fill="#f1f5f9"/>
+                <polygon points="13,16 13,24 19,20" fill="#94a3b8"/>
+              </g>
+              <g transform="translate(100,18)">
+                <rect width="30" height="50" rx="4" fill="#fff" stroke="#1d4ed8" stroke-width="1.6"/>
+                <rect x="4" y="6" width="22" height="28" rx="2" fill="#eff6ff"/>
+                <polygon points="13,16 13,24 19,20" fill="#1d4ed8"/>
+              </g>
+              <g transform="translate(140,18)">
+                <rect width="30" height="50" rx="4" fill="#fff" stroke="#cbd5e1" stroke-width="1.6"/>
+                <rect x="4" y="6" width="22" height="28" rx="2" fill="#f1f5f9"/>
+                <polygon points="13,16 13,24 19,20" fill="#94a3b8"/>
+              </g>
+              <!-- bottom row: count badge -->
+              <g transform="translate(64,82)">
+                <rect width="72" height="30" rx="15" fill="#1d4ed8"/>
+                <text x="36" y="21" text-anchor="middle" font-family="Inter, sans-serif" font-size="15" font-weight="800" fill="#fff">16 videos</text>
+              </g>
+            </g>
+          </svg>
         </div>
         <p>4軸×4本＝<strong>16本</strong>のショート動画を企画・撮影・編集。学生の見やすいスマホ縦型で、企業の魅力を構造的に届けます。</p>
       </div>
@@ -2674,11 +3414,251 @@ footer .meta { font-size: 11px; }
           <h3>視聴行動データのトラッキング</h3>
         </div>
         <div class="visual">
-          <img src="assets/icon_core_search.png" alt="視聴行動分析・トラッキング">
+          <svg class="flat-ico" viewBox="0 0 200 130" fill="none" aria-hidden="true">
+            <!-- ダッシュボード風：グラフと視聴セグメント -->
+            <rect x="20" y="20" width="160" height="90" rx="6" fill="#fff" stroke="#1d4ed8" stroke-width="1.6"/>
+            <!-- header -->
+            <rect x="32" y="32" width="60" height="5" rx="2.5" fill="#1d4ed8"/>
+            <rect x="32" y="42" width="40" height="3" rx="1.5" fill="#cbd5e1"/>
+            <!-- line chart -->
+            <polyline points="32,90 50,80 68,82 86,68 104,72 122,58 140,62 158,48" stroke="#1d4ed8" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="32,90 50,80 68,82 86,68 104,72 122,58 140,62 158,48 158,98 32,98" fill="#dbeafe" opacity="0.6"/>
+            <!-- dots -->
+            <circle cx="86" cy="68" r="3" fill="#1d4ed8"/>
+            <circle cx="122" cy="58" r="3" fill="#1d4ed8"/>
+            <circle cx="158" cy="48" r="3" fill="#1d4ed8"/>
+            <!-- realtime pulse -->
+            <circle cx="158" cy="48" r="7" fill="none" stroke="#1d4ed8" stroke-width="1.5" opacity="0.4"/>
+          </svg>
         </div>
         <p>視聴秒数・視聴回数・フェーズ別動向を<strong>リアルタイムでトラッキング</strong>。本音と建前のギャップが、数字で見えてきます。</p>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PRODUCT UI MOCK — 実際のダッシュボード画面
+     ============================================================ -->
+<section class="product-ui">
+  <div class="container">
+    <p class="section-eyebrow">DASHBOARD</p>
+    <h2 class="section-title"><span class="lead">学生の視聴行動が、リアルタイムで可視化される</span></h2>
+    <p class="product-ui-lead">採用担当者向けダッシュボードでは、動画ごと・学生ごとの視聴秒数、リアクション、フェーズ別動向を一画面で把握。本音と建前のギャップを、数字で読み解けます。</p>
+
+    <div class="product-ui-frame">
+      <!-- ブラウザ風ヘッダー -->
+      <div class="ui-chrome">
+        <span class="ui-dot ui-dot-r"></span>
+        <span class="ui-dot ui-dot-y"></span>
+        <span class="ui-dot ui-dot-g"></span>
+        <span class="ui-url">app.rec-insight.jp/dashboard</span>
+      </div>
+
+      <!-- ダッシュボード本体 -->
+      <div class="ui-body">
+        <!-- サイドバー -->
+        <aside class="ui-side">
+          <div class="ui-side-brand">REC<span>·</span>Insight</div>
+          <nav class="ui-side-nav">
+            <a class="ui-nav active"><span class="ui-nav-ico"></span>ダッシュボード</a>
+            <a class="ui-nav"><span class="ui-nav-ico"></span>動画一覧</a>
+            <a class="ui-nav"><span class="ui-nav-ico"></span>視聴ログ</a>
+            <a class="ui-nav"><span class="ui-nav-ico"></span>サーベイ結果</a>
+            <a class="ui-nav"><span class="ui-nav-ico"></span>レポート</a>
+          </nav>
+        </aside>
+
+        <!-- メインエリア -->
+        <div class="ui-main">
+          <div class="ui-main-head">
+            <h4>視聴ダッシュボード <span class="ui-period">2026.04 - 04.27</span></h4>
+            <span class="ui-pill">リアルタイム更新中</span>
+          </div>
+
+          <!-- KPIカード行 -->
+          <div class="ui-kpi-row">
+            <div class="ui-kpi">
+              <span class="ui-kpi-l">総視聴回数</span>
+              <span class="ui-kpi-v">12,847</span>
+              <span class="ui-kpi-d up">+18.2%</span>
+            </div>
+            <div class="ui-kpi">
+              <span class="ui-kpi-l">完視聴率</span>
+              <span class="ui-kpi-v">68<small>%</small></span>
+              <span class="ui-kpi-d up">+4.3pt</span>
+            </div>
+            <div class="ui-kpi">
+              <span class="ui-kpi-l">平均視聴秒数</span>
+              <span class="ui-kpi-v">42<small>秒</small></span>
+              <span class="ui-kpi-d up">+6秒</span>
+            </div>
+            <div class="ui-kpi">
+              <span class="ui-kpi-l">アクティブ学生</span>
+              <span class="ui-kpi-v">328<small>人</small></span>
+              <span class="ui-kpi-d down">-2.1%</span>
+            </div>
+          </div>
+
+          <!-- グラフ＋ランキング -->
+          <div class="ui-graph-row">
+            <div class="ui-card">
+              <div class="ui-card-head">
+                <span class="ui-card-title">日次・視聴回数推移</span>
+                <span class="ui-card-tag">過去30日</span>
+              </div>
+              <svg class="ui-chart" viewBox="0 0 460 180" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="gradLine" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#1d4ed8" stop-opacity="0.25"/>
+                    <stop offset="100%" stop-color="#1d4ed8" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <!-- gridlines -->
+                <g stroke="#e2e8f0" stroke-width="1">
+                  <line x1="0" y1="40" x2="460" y2="40"/>
+                  <line x1="0" y1="80" x2="460" y2="80"/>
+                  <line x1="0" y1="120" x2="460" y2="120"/>
+                </g>
+                <!-- area fill -->
+                <path d="M0,140 L30,128 L60,132 L90,108 L120,114 L150,96 L180,102 L210,82 L240,88 L270,72 L300,76 L330,58 L360,62 L390,46 L420,50 L460,32 L460,180 L0,180 Z" fill="url(#gradLine)"/>
+                <!-- line -->
+                <path d="M0,140 L30,128 L60,132 L90,108 L120,114 L150,96 L180,102 L210,82 L240,88 L270,72 L300,76 L330,58 L360,62 L390,46 L420,50 L460,32" fill="none" stroke="#1d4ed8" stroke-width="2"/>
+                <!-- dots -->
+                <g fill="#1d4ed8">
+                  <circle cx="180" cy="102" r="3"/>
+                  <circle cx="270" cy="72" r="3"/>
+                  <circle cx="360" cy="62" r="3"/>
+                  <circle cx="460" cy="32" r="4"/>
+                </g>
+              </svg>
+            </div>
+
+            <div class="ui-card">
+              <div class="ui-card-head">
+                <span class="ui-card-title">人気動画ランキング</span>
+                <span class="ui-card-tag">直近7日</span>
+              </div>
+              <ul class="ui-rank">
+                <li><span class="ui-rank-n">1</span><span class="ui-rank-t">「働く環境」社内紹介</span><span class="ui-rank-v">2,184</span></li>
+                <li><span class="ui-rank-n">2</span><span class="ui-rank-t">「将来性」事業ロードマップ</span><span class="ui-rank-v">1,923</span></li>
+                <li><span class="ui-rank-n">3</span><span class="ui-rank-t">「仕事内容」現場密着24h</span><span class="ui-rank-v">1,648</span></li>
+                <li><span class="ui-rank-n">4</span><span class="ui-rank-t">「企業理解」CEOインタビュー</span><span class="ui-rank-v">1,425</span></li>
+                <li><span class="ui-rank-n">5</span><span class="ui-rank-t">「働く環境」福利厚生紹介</span><span class="ui-rank-v">1,182</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- 4軸スコアバー -->
+          <div class="ui-card ui-axis-card">
+            <div class="ui-card-head">
+              <span class="ui-card-title">4軸スコア × 視聴傾向</span>
+              <span class="ui-card-tag">学生328名の自由記述から自動集計</span>
+            </div>
+            <div class="ui-axis-list">
+              <div class="ui-axis-row"><span class="ui-axis-l">企業理解</span><div class="ui-axis-bar"><span style="width:78%;"></span></div><span class="ui-axis-v">78%</span></div>
+              <div class="ui-axis-row"><span class="ui-axis-l">仕事内容</span><div class="ui-axis-bar"><span style="width:62%;"></span></div><span class="ui-axis-v">62%</span></div>
+              <div class="ui-axis-row"><span class="ui-axis-l">働く環境</span><div class="ui-axis-bar"><span style="width:88%;"></span></div><span class="ui-axis-v">88%</span></div>
+              <div class="ui-axis-row"><span class="ui-axis-l">将来性</span><div class="ui-axis-bar"><span style="width:54%;"></span></div><span class="ui-axis-v">54%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="product-ui-note">※ 画面はイメージです。実際のUIは導入企業ごとにカスタマイズ可能です。</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     CASE STUDIES — 導入事例
+     ============================================================ -->
+<section class="cases" id="cases">
+  <div class="container">
+    <p class="section-eyebrow">CASE STUDIES</p>
+    <h2 class="section-title"><span class="lead">導入企業の声</span></h2>
+    <p class="cases-lead">採用広報の構造化と、視聴データの可視化で、<br>「なぜ採れたか」「なぜ辞退されたか」を組織で議論できるようになりました。</p>
+
+    <div class="cases-grid">
+      <article class="case-card">
+        <div class="case-quote-mark">
+</div>
+        <blockquote class="case-body">
+          学生がどの動画のどこで離脱しているのか、初めて数字で見えました。<strong>4軸の中で「将来性」が弱い</strong>という事実が判明し、CEOメッセージ動画を追加。エントリー数が前年比1.4倍になりました。
+        </blockquote>
+        <div class="case-meta">
+          <div class="case-avatar" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none">
+              <circle cx="32" cy="32" r="32" fill="#dbeafe"/>
+              <circle cx="32" cy="26" r="10" fill="#1d4ed8"/>
+              <path d="M12 56c2-10 10-16 20-16s18 6 20 16" fill="#1d4ed8"/>
+            </svg>
+          </div>
+          <div class="case-who">
+            <span class="case-name">山田 太郎 様</span>
+            <span class="case-role">人事部 採用責任者</span>
+            <span class="case-co">A社 / 製造業 / 従業員1,200名</span>
+          </div>
+        </div>
+        <div class="case-result">
+          <span class="case-result-l">エントリー数</span>
+          <span class="case-result-v">+140<small>%</small></span>
+        </div>
+      </article>
+
+      <article class="case-card">
+        <div class="case-quote-mark">“</div>
+        <blockquote class="case-body">
+          媒体だけでは見えなかった「<strong>選考辞退の予兆</strong>」が動画視聴データで可視化されました。視聴秒数が短い学生に個別フォローを徹底し、辞退率を半減させることができました。
+        </blockquote>
+        <div class="case-meta">
+          <div class="case-avatar" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none">
+              <circle cx="32" cy="32" r="32" fill="#fef3c7"/>
+              <circle cx="32" cy="26" r="10" fill="#d97706"/>
+              <path d="M12 56c2-10 10-16 20-16s18 6 20 16" fill="#d97706"/>
+            </svg>
+          </div>
+          <div class="case-who">
+            <span class="case-name">佐藤 花子 様</span>
+            <span class="case-role">採用マネージャー</span>
+            <span class="case-co">B社 / IT・SaaS / 従業員300名</span>
+          </div>
+        </div>
+        <div class="case-result">
+          <span class="case-result-l">内定辞退率</span>
+          <span class="case-result-v">-52<small>%</small></span>
+        </div>
+      </article>
+
+      <article class="case-card">
+        <div class="case-quote-mark">
+</div>
+        <blockquote class="case-body">
+          サーベイで自社の魅力を構造化し、<strong>16本の動画にしたことで、現場社員の協力もスムーズに</strong>。採用広報が「人事だけのもの」ではなく、組織全体の取り組みになりました。
+        </blockquote>
+        <div class="case-meta">
+          <div class="case-avatar" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none">
+              <circle cx="32" cy="32" r="32" fill="#dcfce7"/>
+              <circle cx="32" cy="26" r="10" fill="#15803d"/>
+              <path d="M12 56c2-10 10-16 20-16s18 6 20 16" fill="#15803d"/>
+            </svg>
+          </div>
+          <div class="case-who">
+            <span class="case-name">鈴木 一郎 様</span>
+            <span class="case-role">経営企画 兼 人事</span>
+            <span class="case-co">C社 / 商社 / 従業員800名</span>
+          </div>
+        </div>
+        <div class="case-result">
+          <span class="case-result-l">説明会参加率</span>
+          <span class="case-result-v">+89<small>%</small></span>
+        </div>
+      </article>
+    </div>
+
+    <p class="cases-note">※ 事例は導入企業様への取材に基づく要約です。掲載企業名は弊社にお問い合わせください。</p>
   </div>
 </section>
 
@@ -3034,5 +4014,163 @@ footer .meta { font-size: 11px; }
   }, 3000);
 })();
 </script>
+<!-- ============================================================
+     FONT SWITCHER (Tweaks)
+     ============================================================ -->
+<style>
+  #font-tweaks {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 12px 36px -8px rgba(15, 23, 42, 0.18);
+    padding: 18px 18px 16px;
+    width: 260px;
+    z-index: 9999;
+    font-family: var(--font-jp);
+    display: none;
+  }
+  #font-tweaks.is-open { display: block; }
+  #font-tweaks .ft-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  #font-tweaks .ft-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #0f172a;
+  }
+  #font-tweaks .ft-close {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    color: #64748b;
+    font-size: 18px;
+    line-height: 1;
+    padding: 2px 6px;
+  }
+  #font-tweaks .ft-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.08em;
+    margin: 8px 0 6px;
+  }
+  #font-tweaks .ft-options {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  #font-tweaks .ft-opt {
+    text-align: left;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 9px 12px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    color: #334155;
+    transition: all .2s;
+  }
+  #font-tweaks .ft-opt:hover { background: #eef4ff; border-color: #93b5fc; }
+  #font-tweaks .ft-opt.is-active {
+    background: #1d4ed8;
+    color: #fff;
+    border-color: #1d4ed8;
+  }
+  #font-tweaks .ft-opt small {
+    display: block;
+    font-size: 10px;
+    font-weight: 400;
+    opacity: 0.75;
+    margin-top: 2px;
+  }
+</style>
+
+<div id="font-tweaks">
+  <div class="ft-head">
+    <span class="ft-title">Tweaks · フォント切替</span>
+    <button class="ft-close" type="button" aria-label="閉じる">×</button>
+  </div>
+  <div class="ft-label">PRESET</div>
+  <div class="ft-options" id="ft-options">
+    <button class="ft-opt" data-preset="default">A. Noto Sans JP（現状）<small>標準・無難・読みやすい</small></button>
+    <button class="ft-opt" data-preset="zenkaku">B. Zen Kaku Gothic New<small>柔らかい・親しみ・採用向き</small></button>
+    <button class="ft-opt" data-preset="murecho">C. 見出しMurecho × 本文Noto<small>モダン・知的・SaaS感</small></button>
+    <button class="ft-opt" data-preset="ibm">D. IBM Plex Sans JP<small>かっちり・エンタープライズ</small></button>
+    <button class="ft-opt" data-preset="serif-mix">E. 見出し明朝 × 本文Zen Kaku<small>知性・上品・媒体感</small></button>
+    <button class="ft-opt" data-preset="mplus">F. M PLUS 1p<small>丸みのあるモダン</small></button>
+  </div>
+</div>
+
+<script>
+(function() {
+  const PRESETS = {
+    'default':   { jp: "'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif", heading: null },
+    'zenkaku':   { jp: "'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif", heading: null },
+    'murecho':   { jp: "'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif", heading: "'Murecho', 'Noto Sans JP', sans-serif" },
+    'ibm':       { jp: "'IBM Plex Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif", heading: null },
+    'serif-mix': { jp: "'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', sans-serif", heading: "'Noto Serif JP', 'Shippori Mincho', serif" },
+    'mplus':     { jp: "'M PLUS 1p', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif", heading: null },
+  };
+
+  // 見出し用の追加スタイル（preset切替時にinjectする）
+  let headingStyleEl = null;
+  function applyPreset(name) {
+    const p = PRESETS[name];
+    if (!p) return;
+    const root = document.documentElement;
+    root.style.setProperty('--font-jp', p.jp);
+    // 見出し系（h1〜h3, .section-title, .lead など）に別フォントを当てる場合
+    if (!headingStyleEl) {
+      headingStyleEl = document.createElement('style');
+      headingStyleEl.id = 'font-tweaks-heading';
+      document.head.appendChild(headingStyleEl);
+    }
+    if (p.heading) {
+      headingStyleEl.textContent = `h1, h2, h3, .section-title, .lead, .hero-title, .hero h1 { font-family: ${p.heading} !important; }`;
+    } else {
+      headingStyleEl.textContent = '';
+    }
+    // active表示更新
+    document.querySelectorAll('#font-tweaks .ft-opt').forEach(el => {
+      el.classList.toggle('is-active', el.dataset.preset === name);
+    });
+    try { localStorage.setItem('rec-font-preset', name); } catch (e) {}
+  }
+
+  const panel = document.getElementById('font-tweaks');
+  // ホストの編集モードと連動
+  window.addEventListener('message', (e) => {
+    const t = e.data && e.data.type;
+    if (t === '__activate_edit_mode') panel.classList.add('is-open');
+    if (t === '__deactivate_edit_mode') panel.classList.remove('is-open');
+  });
+  // 閉じるボタン
+  panel.querySelector('.ft-close').addEventListener('click', () => {
+    panel.classList.remove('is-open');
+    try { window.parent.postMessage({type: '__edit_mode_dismissed'}, '*'); } catch(e) {}
+  });
+  // プリセット選択
+  panel.querySelectorAll('.ft-opt').forEach(btn => {
+    btn.addEventListener('click', () => applyPreset(btn.dataset.preset));
+  });
+
+  // 初期復元
+  let initial = 'default';
+  try { initial = localStorage.getItem('rec-font-preset') || 'default'; } catch (e) {}
+  applyPreset(initial);
+
+  // ホストにTweaks利用可能であることを通知
+  try { window.parent.postMessage({type: '__edit_mode_available'}, '*'); } catch(e) {}
+})();
+</script>
+
 </body>
 </html>
