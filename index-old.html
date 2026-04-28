@@ -1,0 +1,2273 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REC Insight — 採用の、ブラックボックスをなくす。</title>
+<meta name="description" content="REC Insightは、学生の行動データから採用のブラックボックスを可視化するサービスです。なぜ来ない、なぜ辞退する、なぜ選ばれない——その答えが、データにあります。">
+<meta name="keywords" content="採用,新卒採用,採用分析,行動データ,REC Insight,採用改善,採用マーケティング">
+<meta name="author" content="R&D Creative">
+<link rel="canonical" href="https://randd-creative.com/">
+
+<!-- Open Graph / SNS共有 -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://randd-creative.com/">
+<meta property="og:title" content="REC Insight — 採用の、ブラックボックスをなくす。">
+<meta property="og:description" content="学生の行動データから採用のブラックボックスを可視化。なぜ来ない、なぜ辞退する、なぜ選ばれない——その答えが、データにあります。">
+<meta property="og:site_name" content="REC Insight">
+<meta property="og:locale" content="ja_JP">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="REC Insight — 採用の、ブラックボックスをなくす。">
+<meta name="twitter:description" content="学生の行動データから採用のブラックボックスを可視化。なぜ来ない、なぜ辞退する、なぜ選ばれない——その答えが、データにあります。">
+
+<!-- セキュリティ -->
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* ========================================
+   REC Insight LP — Redesigned Design System
+   ======================================== */
+:root {
+  /* ── 6-color palette: navy / blue / light-blue / slate-teal / white / gray ── */
+  --navy: #0a0f1e;
+  --navy-light: #131a2e;
+  --navy-mid: #0f1629;
+  --blue: #3b82f6;
+  --blue-dark: #2563eb;
+  --blue-light: #60a5fa;
+  --blue-glow: rgba(59, 130, 246, 0.3);
+  /* Accent: slate-teal — 紺と調和する落ち着いた青緑 */
+  --teal: #3b8fa6;
+  --teal-glow: rgba(59, 143, 166, 0.3);
+  /* Secondary accent: indigo — 紺の延長にある深い青紫 */
+  --purple: #6366f1;
+  --purple-glow: rgba(99, 102, 241, 0.3);
+  /* Mapped aliases (keep vars for compatibility) */
+  --amber: #3b82f6;
+  --amber-glow: rgba(59, 130, 246, 0.3);
+  --green: #3b8fa6;
+  --coral: #3b82f6;
+  --gray-900: #111827;
+  --gray-700: #374151;
+  --gray-600: #4b5563;
+  --gray-500: #6b7280;
+  --gray-400: #9ca3af;
+  --gray-200: #e5e7eb;
+  --gray-100: #f3f4f6;
+  --gray-50: #f9fafb;
+  --teal-50: #f0f9fb;
+  --amber-50: #eff6ff;
+  --blue-50: #eff6ff;
+  --purple-50: #eef2ff;
+  --white: #ffffff;
+  --font-sans: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* Glass tokens — backdrop-filter disabled to prevent text jitter */
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-bg-light: rgba(255, 255, 255, 0.65);
+  --glass-border-light: rgba(255, 255, 255, 0.5);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--gray-200);
+  background: var(--navy);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+/* Scroll Progress Bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--blue);
+  z-index: 10000;
+  border-radius: 0 2px 2px 0;
+  transform: translateZ(0);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.section-label {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 16px;
+  display: inline-block;
+}
+
+h2 {
+  font-family: var(--font-sans);
+  font-weight: 900;
+  font-size: 40px;
+  color: var(--white);
+  margin-bottom: 20px;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--gray-100);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+p { margin-bottom: 16px; }
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 36px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+  color: var(--white);
+  min-width: 240px;
+  box-shadow: 0 4px 20px var(--blue-glow);
+}
+
+.btn-secondary {
+  background: rgba(255,255,255,0.08);
+  color: var(--white);
+  border: 1.5px solid rgba(255,255,255,0.25);
+}
+
+/* Grids */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; }
+.grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 24px; }
+
+/* Bento Grid */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto auto;
+  gap: 20px;
+}
+.bento-grid .bento-wide {
+  grid-column: span 2;
+}
+.bento-grid .bento-tall {
+  grid-row: span 2;
+}
+@media (max-width: 960px) {
+  .bento-grid { grid-template-columns: 1fr 1fr; }
+  .bento-grid .bento-wide { grid-column: span 2; }
+}
+@media (max-width: 640px) {
+  .bento-grid { grid-template-columns: 1fr; }
+  .bento-grid .bento-wide { grid-column: span 1; }
+}
+
+/* Cards — Glassmorphism */
+.card {
+  background: var(--glass-bg);
+
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 32px;
+}
+
+.kpi-number {
+  font-family: var(--font-sans);
+  font-weight: 900;
+  line-height: 1;
+}
+
+/* ========================================
+   ANIMATIONS — Safe: transform + opacity only
+   ======================================== */
+
+/* Scroll fade-in */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fade-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.fade-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.fade-right {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.fade-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.scale-in {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.scale-in.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Hero section — NO animations at all (prevents jitter on initial load) */
+.hero * {
+  transition: none !important;
+  transform: none !important;
+}
+.hero .container {
+  transform: none !important;
+}
+
+/* Stagger delays */
+.stagger-1 { transition-delay: 0.1s; }
+.stagger-2 { transition-delay: 0.2s; }
+.stagger-3 { transition-delay: 0.3s; }
+.stagger-4 { transition-delay: 0.4s; }
+.stagger-5 { transition-delay: 0.5s; }
+
+/* Hover — transform + opacity + box-shadow only (no background transition) */
+.btn {
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+}
+.btn:active {
+  transform: translateY(-1px);
+}
+
+.card,
+.challenge-card,
+.vision-card,
+.survey-card,
+.phase-card,
+.product-panel,
+.value-item,
+.screen-placeholder,
+.step-card,
+.case-card,
+.asset-card,
+.dash-item {
+  transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
+}
+.card:hover,
+.challenge-card:hover,
+.vision-card:hover,
+.survey-card:hover,
+.phase-card:hover,
+.product-panel:hover,
+.value-item:hover,
+.screen-placeholder:hover,
+.step-card:hover,
+.case-card:hover,
+.asset-card:hover,
+.dash-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+}
+
+.dash-screen {
+  transition: transform 0.4s ease-out;
+}
+.dash-screen:hover {
+  transform: scale(1.02);
+}
+
+.btn-white {
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+.btn-white:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+}
+.btn-white-outline {
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+.btn-white-outline:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+}
+
+/* Nav link hover — color only */
+.nav-link {
+  transition: color 0.3s ease-out, opacity 0.3s ease-out;
+}
+.nav-link:hover {
+  color: var(--white);
+}
+.navbar-brand {
+  transition: opacity 0.3s ease-out;
+}
+.navbar-brand:hover {
+  opacity: 0.8;
+}
+
+/* Navbar scroll state */
+.navbar {
+  transition: box-shadow 0.3s ease-out;
+}
+.navbar.scrolled {
+  box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+}
+
+/* Scroll progress bar */
+.scroll-progress {
+  transition: width 0.1s linear;
+}
+
+/* FAQ summary hover */
+.faq-item summary {
+  transition: color 0.3s ease-out;
+}
+.faq-item summary:hover {
+  color: var(--blue);
+}
+
+/* Logo hover */
+.logo-band .logos span {
+  transition: opacity 0.3s ease-out;
+}
+.logo-band .logos span:hover {
+  opacity: 1;
+  color: var(--white);
+}
+
+/* Dashboard features list hover */
+.dash-content .features li {
+  transition: transform 0.3s ease-out;
+}
+.dash-content .features li:hover {
+  transform: translateX(8px);
+}
+
+/* Timeline hover */
+.timeline li {
+  transition: transform 0.3s ease-out;
+}
+.timeline li:hover {
+  transform: translateX(12px);
+}
+
+/* Pricing table row hover */
+.pricing-table tr:hover td {
+  background: rgba(59, 130, 246, 0.04);
+}
+.compare-table tr:hover td {
+  background: rgba(59, 130, 246, 0.03);
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  h2 { font-size: 30px; }
+  .hero-catch { font-size: 38px !important; }
+  .container { padding: 0 20px; }
+  .bento-grid[style*="grid-template-columns: repeat(3"] { grid-template-columns: 1fr 1fr !important; }
+  .bento-grid[style*="grid-template-columns: repeat(3"] .value-item[style*="grid-column: span 3"] { grid-column: span 2 !important; }
+}
+
+@media (max-width: 640px) {
+  .btn-group { flex-direction: column; align-items: stretch; }
+  .btn-group .btn { min-width: unset; text-align: center; }
+  .container { padding: 0 16px; }
+  h2 { font-size: 26px; }
+  .bento-grid[style*="grid-template-columns: repeat(3"] { grid-template-columns: 1fr !important; }
+  .bento-grid[style*="grid-template-columns: repeat(3"] .value-item[style*="grid-column: span 2"],
+  .bento-grid[style*="grid-template-columns: repeat(3"] .value-item[style*="grid-column: span 3"] { grid-column: span 1 !important; }
+}
+
+/* ========================================
+   NAVBAR
+   ======================================== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(10, 15, 30, 0.92);
+  z-index: 1000;
+  padding: 0 32px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  transform: translateZ(0);
+}
+.navbar.scrolled {
+  background: rgba(10, 15, 30, 0.95);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+}
+.navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+.navbar-brand {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--white);
+  text-decoration: none;
+  letter-spacing: -0.5px;
+}
+.navbar-brand span {
+  background: linear-gradient(135deg, var(--blue), var(--blue-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.nav-link {
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+.navbar-cta .btn {
+  padding: 10px 24px;
+  font-size: 14px;
+  border-radius: 10px;
+}
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  flex-direction: column;
+  gap: 5px;
+}
+.nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+}
+.nav-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.nav-toggle.active span:nth-child(2) { opacity: 0; }
+.nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+@media (max-width: 960px) {
+  .navbar-nav {
+    display: none;
+    position: absolute;
+    top: 72px;
+    left: 0;
+    right: 0;
+    background: rgba(10, 15, 30, 0.98);
+    flex-direction: column;
+    padding: 16px 32px 24px;
+    gap: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .navbar-nav.open { display: flex; }
+  .nav-link {
+    padding: 14px 16px;
+    font-size: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    border-radius: 0;
+    width: 100%;
+  }
+  .nav-toggle { display: flex; }
+  .navbar-cta { display: none; }
+}
+
+/* ========================================
+   SECTION 01 — Hero
+   ======================================== */
+.hero {
+  background: var(--navy);
+  position: relative;
+  overflow: hidden;
+  padding: 140px 0 120px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+/* Floating orbs — use radial-gradient instead of filter:blur to prevent text jitter */
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero-orb-1 {
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(59,130,246,0.35) 0%, transparent 70%);
+  top: -200px; right: -200px;
+}
+.hero-orb-2 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(37,99,235,0.3) 0%, transparent 70%);
+  bottom: -200px; left: -200px;
+}
+.hero-orb-3 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(59,143,166,0.25) 0%, transparent 70%);
+  top: 50%; left: 50%;
+}
+
+/* Particles — disabled for stability */
+.particles {
+  display: none;
+}
+
+.hero .container { position: relative; z-index: 1; }
+.hero-catch {
+  font-family: var(--font-sans);
+  font-weight: 900;
+  font-size: 64px;
+  color: var(--white);
+  line-height: 1.15;
+  margin-bottom: 24px;
+  letter-spacing: -0.03em;
+}
+.hero-catch .gradient-text {
+  color: var(--blue-light);
+}
+.hero-sub {
+  font-size: 22px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 20px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+.hero-body {
+  font-size: 17px;
+  color: rgba(255,255,255,0.5);
+  max-width: 700px;
+  margin-bottom: 48px;
+  line-height: 1.8;
+}
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 56px;
+}
+@media (max-width: 960px) { .hero-stats { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 640px) { .hero-stats { grid-template-columns: 1fr; } }
+.hero-stat {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 20px 24px;
+  text-align: center;
+}
+.hero-stat .label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.hero-stat .value {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--blue-light);
+  line-height: 1.2;
+}
+.hero-stat .company {
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+  margin-top: 6px;
+  font-weight: 500;
+}
+.btn-group {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* ========================================
+   SECTION 02 — 4 Challenges
+   ======================================== */
+.challenges { padding: 120px 0 0; background: var(--navy); position: relative; }
+.challenges::before {
+  content: '';
+  position: absolute;
+  top: -200px;
+  left: -200px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--blue-glow), transparent 70%);
+  opacity: 0.3;
+  pointer-events: none;
+}
+.challenges-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 960px) { .challenges-grid { grid-template-columns: 1fr; } }
+.challenge-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 32px;
+  cursor: default;
+  position: relative;
+}
+.challenge-card .challenge-num {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gray-500);
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+.challenge-card h3 { font-size: 18px; margin-bottom: 10px; }
+.challenge-card p { font-size: 14px; color: var(--gray-400); margin-bottom: 0; line-height: 1.8; }
+
+.summary-band {
+  background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  color: var(--white);
+  text-align: center;
+  padding: 48px 24px;
+  margin-top: 80px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.6;
+  position: relative;
+  overflow: hidden;
+}
+.summary-band::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--blue-glow), transparent, var(--purple-glow));
+  opacity: 0.3;
+}
+.summary-band p { position: relative; z-index: 1; margin-bottom: 0; }
+
+/* ========================================
+   SECTION 03 — Vision
+   ======================================== */
+.vision {
+  padding: 120px 0;
+  background: var(--navy-mid);
+  position: relative;
+  overflow: hidden;
+}
+.vision::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -150px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, var(--teal-glow), transparent 70%);
+  opacity: 0.25;
+  pointer-events: none;
+}
+.vision-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+@media (max-width: 960px) { .vision-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 640px) { .vision-grid { grid-template-columns: 1fr; } }
+.vision-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 28px 24px;
+  text-align: center;
+}
+.vision-card h3 { font-size: 16px; margin-bottom: 8px; }
+.vision-card p { font-size: 14px; color: var(--gray-400); margin-bottom: 0; font-weight: 500; }
+
+/* ========================================
+   SECTION 04 — Product
+   ======================================== */
+.product { padding: 120px 0; background: var(--navy); position: relative; overflow: hidden; }
+.product::before {
+  content: '';
+  position: absolute;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 400px;
+  background: radial-gradient(ellipse, var(--blue-glow), transparent 70%);
+  opacity: 0.2;
+  pointer-events: none;
+}
+.product-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin: 56px 0;
+}
+@media (max-width: 960px) { .product-split { grid-template-columns: 1fr; } }
+.product-panel {
+  background: var(--glass-bg);
+
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+}
+.product-panel h3 { font-size: 18px; }
+.product-panel .badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.value-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-top: 56px; }
+@media (max-width: 960px) { .value-grid { grid-template-columns: 1fr; } }
+.value-item {
+  text-align: center;
+  padding: 40px 24px;
+  border-radius: 20px;
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.15);
+
+}
+.value-item .num {
+  font-size: 56px;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--blue), var(--blue-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+.value-item p { font-size: 14px; margin-bottom: 0; }
+
+/* ========================================
+   SECTION 05 — Survey
+   ======================================== */
+.survey {
+  padding: 120px 0;
+  background: var(--navy-mid);
+  position: relative;
+  overflow: hidden;
+}
+.survey::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -100px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, var(--teal-glow), transparent 70%);
+  opacity: 0.2;
+  pointer-events: none;
+}
+.survey-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 28px 32px;
+  margin-bottom: 16px;
+}
+.survey-card h3 { font-size: 18px; }
+.survey-screens {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+  margin-top: 56px;
+}
+@media (max-width: 960px) { .survey-screens { grid-template-columns: 1fr; } }
+.screen-placeholder {
+  background: var(--glass-bg);
+
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 56px 24px;
+  text-align: center;
+  color: var(--gray-400);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ========================================
+   SECTION 06 — Phase Strategy
+   ======================================== */
+.phases { padding: 120px 0; background: var(--navy); position: relative; }
+.phase-card {
+  background: var(--glass-bg);
+
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 36px;
+  border-top: 4px solid;
+  position: relative;
+}
+.phase-card .phase-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+.phase-card .phase-sub {
+  font-size: 13px;
+  color: var(--gray-400);
+  font-style: italic;
+  margin-bottom: 12px;
+}
+.phase-grid {
+  display: grid;
+  grid-template-columns: 1fr 40px 1fr 40px 1fr;
+  gap: 0;
+  align-items: start;
+}
+.phase-grid .arrow-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 80px;
+  font-size: 24px;
+  color: var(--gray-400);
+  opacity: 0.6;
+}
+@media (max-width: 960px) {
+  .phase-grid { grid-template-columns: 1fr; gap: 24px; }
+  .phase-grid .arrow-col { display: none; }
+}
+.new-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+  color: var(--white);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 6px;
+}
+.extra-box {
+  margin-top: 56px;
+  padding: 40px;
+  background: var(--glass-bg);
+
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+}
+
+/* ========================================
+   SECTION 07 — Dashboard
+   ======================================== */
+.dashboard {
+  padding: 120px 0;
+  background: var(--navy-mid);
+  position: relative;
+  overflow: hidden;
+}
+.dashboard::before {
+  content: '';
+  position: absolute;
+  top: 30%;
+  right: -200px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--blue-glow), transparent 70%);
+  opacity: 0.15;
+  pointer-events: none;
+}
+.dash-item {
+  background: var(--glass-bg);
+
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 48px;
+  margin-bottom: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+@media (max-width: 960px) { .dash-item { grid-template-columns: 1fr; padding: 32px; } }
+.dash-item:nth-child(even) { direction: rtl; }
+.dash-item:nth-child(even) > * { direction: ltr; }
+.dash-screen {
+  background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(37,99,235,0.15), rgba(59,130,246,0.1));
+  border: 1px solid rgba(59,130,246,0.2);
+  border-radius: 16px;
+  padding: 60px 24px;
+  text-align: center;
+  color: var(--blue);
+  font-size: 14px;
+  font-weight: 700;
+  min-height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dash-content .dash-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+}
+.dash-content h3 { font-size: 20px; }
+.dash-content .features {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+.dash-content .features li {
+  padding: 8px 0;
+  font-size: 14px;
+  color: var(--gray-400);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+}
+.dash-content .features li::before {
+  content: '✓';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  vertical-align: middle;
+  background: linear-gradient(135deg, var(--blue), var(--blue-light));
+  border-radius: 50%;
+  color: white;
+  font-size: 11px;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+/* ========================================
+   SECTION 08 — Case Studies
+   ======================================== */
+.cases { padding: 120px 0; background: var(--navy); position: relative; overflow: hidden; }
+.cases::before {
+  content: '';
+  position: absolute;
+  bottom: -100px;
+  right: -100px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, var(--purple-glow), transparent 70%);
+  opacity: 0.2;
+  pointer-events: none;
+}
+.case-card {
+  background: var(--glass-bg);
+
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 48px;
+  position: relative;
+  overflow: hidden;
+}
+.case-card .industry-badge {
+  display: inline-block;
+  padding: 8px 20px;
+  border-radius: 24px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.case-card .result-number {
+  font-size: 56px;
+  font-weight: 900;
+  line-height: 1;
+  margin: 8px 0;
+}
+.case-card .result-detail {
+  font-size: 14px;
+  color: var(--gray-400);
+}
+.logo-band {
+  margin-top: 80px;
+  padding: 48px;
+  background: var(--glass-bg);
+
+  border-radius: 20px;
+  text-align: center;
+  border: 1px solid var(--glass-border);
+}
+.logo-band p {
+  font-size: 14px;
+  color: var(--gray-400);
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+.logo-band .logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 32px;
+}
+.logo-band .logos span {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gray-400);
+  opacity: 0.5;
+}
+
+/* ========================================
+   SECTION 09 — Pricing
+   ======================================== */
+.pricing {
+  padding: 120px 0;
+  background: var(--navy-mid);
+  position: relative;
+  overflow: hidden;
+}
+.pricing::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, var(--amber-glow), transparent 70%);
+  opacity: 0.15;
+  pointer-events: none;
+}
+.pricing-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--glass-bg);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  margin-bottom: 56px;
+}
+.pricing-table th {
+  background: rgba(255,255,255,0.08);
+  color: var(--white);
+  padding: 20px 24px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.pricing-table td {
+  padding: 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 15px;
+  vertical-align: top;
+  color: var(--gray-300);
+}
+.pricing-table tr:last-child td {
+  background: rgba(59, 130, 246, 0.08);
+  font-weight: 700;
+  border-bottom: none;
+  color: var(--white);
+}
+.roi-section { margin-top: 56px; }
+.roi-big {
+  font-size: 80px;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--teal), var(--blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+.asset-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+  margin-top: 48px;
+}
+@media (max-width: 960px) { .asset-grid { grid-template-columns: 1fr; } }
+.asset-card {
+  background: var(--glass-bg);
+
+  border-radius: 20px;
+  padding: 36px;
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  text-align: center;
+}
+
+/* ========================================
+   SECTION 10 — Comparison
+   ======================================== */
+.comparison { padding: 120px 0; background: var(--navy); }
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+}
+.compare-table th {
+  padding: 24px;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: left;
+}
+.compare-table th:first-child {
+  background: rgba(255,255,255,0.05);
+  color: var(--gray-400);
+  width: 20%;
+}
+.compare-table th:nth-child(2) {
+  background: rgba(255,255,255,0.03);
+  color: var(--gray-400);
+  width: 40%;
+}
+.compare-table th:nth-child(3) {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--blue);
+  width: 40%;
+  border-left: 3px solid var(--blue);
+}
+.compare-table td {
+  padding: 20px 24px;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  vertical-align: top;
+  color: var(--gray-300);
+}
+.compare-table td:first-child {
+  font-weight: 700;
+  color: var(--white);
+}
+.compare-table td:nth-child(3) {
+  background: rgba(59, 130, 246, 0.06);
+  border-left: 3px solid var(--blue);
+  color: var(--white);
+  font-weight: 600;
+}
+
+/* ========================================
+   SECTION 11 — Onboarding
+   ======================================== */
+.onboarding {
+  padding: 120px 0;
+  background: var(--navy-mid);
+  position: relative;
+  overflow: hidden;
+}
+.onboarding::before {
+  content: '';
+  position: absolute;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(ellipse, var(--teal-glow), transparent 70%);
+  opacity: 0.15;
+  pointer-events: none;
+}
+.step-card {
+  background: var(--glass-bg);
+
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.step-card .step-num {
+  font-size: 56px;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--blue-dark), var(--blue-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+.step-card h3 { font-size: 18px; }
+.timeline {
+  margin-top: 72px;
+  padding: 0;
+  list-style: none;
+}
+.timeline li {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 32px;
+  padding: 28px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  align-items: start;
+}
+@media (max-width: 640px) { .timeline li { grid-template-columns: 1fr; gap: 8px; } }
+.timeline .week {
+  font-weight: 700;
+  color: var(--blue);
+  font-size: 15px;
+}
+.timeline .desc { font-size: 15px; color: var(--gray-400); line-height: 1.8; }
+
+/* ========================================
+   SECTION 12 — FAQ
+   ======================================== */
+.faq { padding: 120px 0; background: var(--navy); }
+.faq-item {
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 32px 0;
+}
+.faq-item summary {
+  font-weight: 700;
+  color: var(--white);
+  font-size: 18px;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.faq-item summary::after {
+  content: '+';
+  font-size: 28px;
+  color: var(--gray-400);
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.06);
+  border-radius: 50%;
+}
+.faq-item[open] summary::after {
+  content: '\2212';
+  transform: rotate(180deg);
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--blue);
+}
+.faq-item .answer {
+  margin-top: 16px;
+  font-size: 15px;
+  color: var(--gray-400);
+  line-height: 1.9;
+}
+
+/* ========================================
+   SECTION 13 — Company
+   ======================================== */
+.company-section { padding: 120px 0; background: var(--navy-mid); }
+.company-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+}
+@media (max-width: 960px) { .company-grid { grid-template-columns: 1fr; } }
+.company-info table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.company-info td {
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 15px;
+  vertical-align: top;
+  color: var(--gray-300);
+}
+.company-info td:first-child {
+  font-weight: 700;
+  color: var(--white);
+  width: 120px;
+}
+
+/* ========================================
+   SECTION 14 — Final CTA
+   ======================================== */
+.final-cta {
+  background: linear-gradient(135deg, var(--blue-dark), var(--blue), #1d4ed8);
+  padding: 120px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.final-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1), transparent 40%),
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1), transparent 40%);
+}
+.final-cta .container { position: relative; z-index: 1; }
+.final-cta h2 { color: var(--white); font-size: 44px; margin-bottom: 20px; }
+.final-cta p { color: rgba(255,255,255,0.85); font-size: 18px; max-width: 640px; margin: 0 auto 48px; line-height: 1.8; }
+.cta-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+.btn-white {
+  background: var(--white);
+  color: var(--blue-dark);
+  padding: 18px 36px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+.btn-white-outline {
+  background: rgba(255,255,255,0.1);
+  color: var(--white);
+  padding: 18px 36px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  cursor: pointer;
+}
+.final-note {
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+}
+
+/* Footer */
+footer {
+  background: var(--navy);
+  padding: 40px 0;
+  text-align: center;
+}
+footer p {
+  color: rgba(255,255,255,0.3);
+  font-size: 13px;
+  margin-bottom: 0;
+}
+</style>
+</head>
+<body>
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- ========================================
+     NAVBAR
+     ======================================== -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <a href="#" class="navbar-brand">REC <span>Insight</span></a>
+    <div class="navbar-nav">
+      <a href="#product" class="nav-link">サービス概要</a>
+      <a href="#dashboard" class="nav-link">できること</a>
+      <a href="#cases" class="nav-link">導入事例</a>
+      <a href="#pricing" class="nav-link">料金</a>
+      <a href="#faq" class="nav-link">FAQ</a>
+      <a href="#company" class="nav-link">会社概要</a>
+    </div>
+    <div class="navbar-cta">
+      <a href="#final-cta" class="btn btn-primary" style="min-width:auto;">無料で相談する</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="メニュー"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ========================================
+     SECTION 01 — Hero
+     ======================================== -->
+<section class="hero" id="hero">
+  <!-- Floating Orbs -->
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-orb hero-orb-3"></div>
+
+  <!-- Particles -->
+  <div class="particles" id="particles"></div>
+
+  <div class="container">
+    <p class="section-label" style="color: var(--blue);">REC Insight</p>
+    <h1 class="hero-catch">採用の、<span class="gradient-text">ブラックボックス</span>を<br>なくす。</h1>
+    <p class="hero-sub">なぜ来ない、なぜ辞退する、なぜ選ばれない——<br>その答えが、学生の行動データにあります。</p>
+    <p class="hero-body">REC Insightは「ショート動画 × 視聴行動分析」で、面接外の学生の本音を数字にする採用ソリューションです。母集団形成・選考歩留まり・内定辞退——採用のあらゆるフェーズの課題に対応します。</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="label">内定辞退率</div>
+        <div class="value"><span class="counter" data-target="60">0</span>%→<span class="counter" data-target="30">0</span>%</div>
+        <div class="company">金融・保険業界</div>
+      </div>
+      <div class="hero-stat">
+        <div class="label">選考応募率</div>
+        <div class="value"><span class="counter" data-target="16">0</span>%→<span class="counter" data-target="35">0</span>%</div>
+        <div class="company">自動車ディーラー</div>
+      </div>
+      <div class="hero-stat">
+        <div class="label">説明会参加率</div>
+        <div class="value"><span class="counter" data-target="25">0</span>%→<span class="counter" data-target="40">0</span>%</div>
+        <div class="company">自動車ディーラー</div>
+      </div>
+      <div class="hero-stat">
+        <div class="label">コスト削減</div>
+        <div class="value"><span class="counter" data-target="1350" data-separator="true">0</span><span style="font-size:14px;">万円</span></div>
+        <div class="company">金融・保険業界</div>
+      </div>
+    </div>
+    <div class="btn-group">
+      <a href="#final-cta" class="btn btn-primary">まずは無料で相談する</a>
+      <a href="#" class="btn btn-secondary">資料をダウンロードする</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     SECTION 02 — 4 Challenges
+     ======================================== -->
+<section class="challenges" id="challenges">
+  <div class="container">
+    <p class="section-label fade-up" style="color: var(--blue);">Common Challenges</p>
+    <h2 class="fade-up">採用現場の4つの課題</h2>
+    <p class="fade-up" style="margin-bottom:48px;">全業種に共通する、いま採用担当者が直面している構造的な課題。</p>
+
+    <div class="challenges-grid">
+      <div class="challenge-card fade-up stagger-1">
+        <div class="challenge-num">01</div>
+        <h3>エントリーしたのに、来ない。</h3>
+        <p>学生が企業を8〜10社に厳選するようになり、エントリー後に興味を失うケースが急増。認知フェーズから魅力を届けられなければ、説明会の席は埋まらない時代です。</p>
+      </div>
+
+      <div class="challenge-card fade-up stagger-2">
+        <div class="challenge-num">02</div>
+        <h3>面接では、本音が見えない。</h3>
+        <p>生成AIでES・面接回答が均質化。表面的な受け答えで志望度を判断することが困難に。「なんとなく良さそう」で通過させた学生が翌週辞退する体験が、今の採用現場で急増しています。</p>
+      </div>
+
+      <div class="challenge-card fade-up stagger-3">
+        <div class="challenge-num">03</div>
+        <h3>なぜ辞退されたのか、分からない。</h3>
+        <p>辞退は面接と面接の間に起きています。合否を待つ2週間、学生の気持ちは動いています。理由も分からないまま、辞退が繰り返されます。</p>
+      </div>
+
+      <div class="challenge-card fade-up stagger-4">
+        <div class="challenge-num">04</div>
+        <h3>毎年、リセットされる採用。</h3>
+        <p>媒体・エージェント頼りではデータが自社に残りません。なぜ採れたか・なぜ失敗したかの理由が分からないまま、来年も同じ予算を同じ場所に投じ続けます。採用の成功体験が、組織に積み上がらない構造です。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="summary-band">
+    <p>採用広報を見直し、「学生の行動データ」を自社に蓄積する仕組みが急務です。</p>
+  </div>
+</section>
+
+<!-- ========================================
+     SECTION 03 — Vision
+     ======================================== -->
+<section class="vision" id="vision">
+  <div class="container">
+    <p class="section-label fade-up" style="color: var(--blue);">Vision</p>
+    <h2 class="fade-up">「採用したい人が、来る採用」へ。</h2>
+    <p class="fade-up" style="max-width:700px; margin-bottom:56px;">条件や待遇の打ち出しだけでは、もう選ばれない。自社で働くことへの「共感」が、内定承諾の決め手になっています。</p>
+
+    <div class="vision-grid">
+      <div class="vision-card fade-up scale-in stagger-1">
+        <h3>共感で集まる母集団</h3>
+        <p>条件や知名度ではなく「共感」で集まる母集団を形成。ミスマッチのない採用が実現します。</p>
+      </div>
+      <div class="vision-card fade-up scale-in stagger-2">
+        <h3>迷わず承諾される内定</h3>
+        <p>内定を出したら、迷わず承諾される。入社前から企業理解が深まっている状態をつくります。</p>
+      </div>
+      <div class="vision-card fade-up scale-in stagger-3">
+        <h3>入社後も活躍・定着</h3>
+        <p>入社後に活躍し、長く働いてくれる。採用段階でのマッチ精度が定着率に直結します。</p>
+      </div>
+      <div class="vision-card fade-up scale-in stagger-4">
+        <h3>ノウハウが積み上がる</h3>
+        <p>担当者が変わっても、データと仕組みが残る。属人化しない採用体制を構築できます。</p>
+      </div>
+    </div>
+
+    <p class="fade-up" style="margin-top:56px; max-width:750px;">そのために必要なのは、自社の魅力を「目標・活動・人材・条件」の4軸で整理し、学生が知りたい情報を知りたいタイミングで届ける仕組みとデータです。</p>
+  </div>
+</section>
+
+<!-- ========================================
+     SECTION 04 — Product
+     ======================================== -->
+<section class="product" id="product">
+  <div class="container">
+    <p class="section-label fade-up" style="color: var(--blue);">Product</p>
+    <h2 class="fade-up">面接外がブラックボックスのまま、でいいですか？</h2>
+    <p class="fade-up" style="max-width:750px; margin-bottom:16px;">「16本のショート動画」×「独自の視聴行動分析システム」。学生が誰の動画を、いつ、何秒見たか——その行動データが、言葉にならない本音を数字にします。</p>
+
+    <div class="product-split">
+      <div class="product-panel fade-left" style="color: var(--blue);">
+        <span class="badge" style="background: linear-gradient(135deg, var(--teal), #2a7a8f); color: var(--white);">学生側の体験</span>
+        <h3>学生には「自分だけのページ」が届く</h3>
+        <p style="color: var(--gray-400);">「吉田亮太 様へのコンテンツ」——個人名入りの限定ポータルがスマホに届きます。</p>
+        <p style="color: var(--gray-400);">面接のように「見られている意識」がない状態で視聴するから、本音の行動が正確に記録されます。</p>
+        <p style="color: var(--gray-400); margin-bottom:0;">動画・パンフレット・記事、すべての閲覧行動がトラッキングされます。</p>
+      </div>
+      <div class="product-panel fade-right" style="color: var(--blue);">
+        <span class="badge" style="background: linear-gradient(135deg, var(--blue), var(--blue-dark)); color: var(--white);">企業側の価値</span>
+        <h3>企業には「本音の行動データ」が届く</h3>
+        <p style="color: var(--gray-400);">ページを開いた瞬間から視聴時間・視聴回数・閲覧コンテンツのカウントが開始。</p>
+        <p style="color: var(--gray-400); margin-bottom:0;">管理画面にリアルタイム反映。採用ファネル全体の漏れ箇所を一画面で把握できます。</p>
+      </div>
+    </div>
+
+    <h3 class="fade-up" style="text-align:center; margin-bottom:12px;">3つの価値</h3>
+    <div class="value-grid">
+      <div class="value-item fade-up scale-in stagger-1">
+        <div class="num">01</div>
+        <h3 style="font-size:16px;">採用ファネル全体が見える</h3>
+        <p>認知→承諾まで採用の漏れ箇所を一画面で把握。どこで学生が離脱しているか一目瞭然。</p>
+      </div>
+      <div class="value-item fade-up scale-in stagger-2">
+        <div class="num">02</div>
+        <h3 style="font-size:16px;">本音と建前のギャップが分かる</h3>
+        <p>「理念重視」と言いながら条件動画を最も見ている実態が判明</p>
+      </div>
+      <div class="value-item fade-up scale-in stagger-3">
+        <div class="num">03</div>
+        <h3 style="font-size:16px;">採用ノウハウが積み上がる</h3>
+        <p>担当者が変わってもデータが引き継がれる。媒体費・エージェント費と違い、投資するたびに自社に資産が蓄積されます。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     SECTION 05 — Survey
+     ======================================== -->
+<section class="survey" id="survey">
+  <div class="container">
+    <p class="section-label fade-up" style="color: var(--blue);">Survey — Free</p>
+    <h2 class="fade-up">採用広報サーベイ（無償提供）</h2>
+    <p class="fade-up" style="max-width:700px; margin-bottom:16px; font-size:20px; font-weight:700; color:var(--white);">「何を撮るか」に迷っている時間が、いちばんもったいない。</p>
+    <p class="fade-up" style="max-width:700px; margin-bottom:56px;">入社3年目以内の若手社員に5段階評価＋自由記述アンケートを配信。4軸スコアが自動集計され（例：目標の魅力3.30・活動の魅力2.80）、動画テーマが数字で決まります。費用はゼロ。まず自社の採用の強みをデータで確認することから始められます。</p>
+
+    <div class="survey-card fade-up stagger-1">
+      <h3>「何を撮るか」に、もう迷わない</h3>
+      <p style="margin-bottom:0;">スコアが高い軸を強みとして訴求し、低い軸は誇張しない誠実設計。「目標の魅力3.30・活動の魅力2.80」という数字が、動画テーマを決めます。</p>
+    </div>
+    <div class="survey-card fade-up stagger-2">
+      <h3>職種・部署ごとに、刺さる訴求が変わる</h3>
+      <p style="margin-bottom:0;">部署・入社年度・新卒/中途でフィルターをかけると、職種ごとの差が数字で判明。「企画部フィルター：目標の魅力4.40」→ 職種別カスタマイズの根拠になります。</p>
+    </div>
+    <div class="survey-card fade-up stagger-3">
+      <h3>社員の生の声が、そのまま動画の台本になる</h3>
+      <p style="margin-bottom:0;">「会社のいいところ・悪いところ」の自由記述が本物のコンテンツの核になります。外部ライターには書けない現場のリアルな言葉が、採用動画の本物感をつくります。</p>
+    </div>
+
+    <div class="survey-screens">
+      <div class="screen-placeholder fade-up scale-in stagger-1">
+        サーベイ編集画面<br><span style="font-size:12px; color:var(--gray-400);">設問設計・回答リンク管理</span>
+      </div>
+      <div class="screen-placeholder fade-up scale-in stagger-2">
+        社員回答画面<br><span style="font-size:12px; color:var(--gray-400);">スマホ最適化UI・5段階評価</span>
+      </div>
+      <div class="screen-placeholder fade-up scale-in stagger-3">
+        集計・属性フィルター画面<br><span style="font-size:12px; color:var(--gray-400);">4軸スコア・部署別分析</span>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ========================================
+     SECTION 06 — Phase Strategy
+     ======================================== -->
+<section class="phases" id="phases">
+  <div class="container">
+    <p class="section-label fade-up" style="color: var(--navy);">Delivery Strategy</p>
+    <h2 class="fade-up">フェーズ別配信戦略 × 職種カスタマイズ</h2>
+    <p class="fade-up" style="max-width:700px; margin-bottom:16px; font-size:20px; font-weight:700; color:var(--white);">「全部まとめて見せる」は逆効果。</p>
+    <p class="fade-up" style="max-width:700px; margin-bottom:56px;">認知期に詳細な待遇を見せても刺さらない。内定後に会社紹介を見せても遅い。学生が「今、知りたい情報」を適切なタイミングで届ける設計が、歩留まりを最大化します。</p>
+
+    <div class="phase-grid">
+      <div class="phase-card fade-up stagger-1" style="border-top-color: var(--blue);">
+        <div class="phase-label" style="color: var(--blue);">Phase 1</div>
+        <h3>認知・エントリー期</h3>
+        <div class="phase-sub">〜広く浅く〜</div>
+        <p style="font-size:14px; margin-bottom:12px;"><strong>目的：</strong>視覚的な親しみと信頼感を与え、選考参加ハードルを下げる</p>
+        <p style="font-size:13px; color:var(--gray-400); margin-bottom:0;"><strong>コンテンツ例：</strong>会社説明会映像 / 数字で見る会社 / 社長インタビュー（理念編）</p>
+      </div>
+      <div class="arrow-col">→</div>
+      <div class="phase-card fade-up stagger-2" style="border-top-color: var(--blue);">
+        <div class="phase-label" style="color: var(--blue);">Phase 2</div>
+        <h3>選考中</h3>
+        <div class="phase-sub">〜深く具体的に〜</div>
+        <p style="font-size:14px; margin-bottom:12px;"><strong>目的：</strong>「働く自分」をイメージさせ、他社と差別化し面接での対話を深める</p>
+        <p style="font-size:13px; color:var(--gray-400); margin-bottom:0;"><strong>コンテンツ例：</strong>先輩1日密着（職種別）/ 先輩後輩対談 / 同期座談会</p>
+      </div>
+      <div class="arrow-col">→</div>
+      <div class="phase-card fade-up stagger-3" style="border-top-color: var(--blue);">
+        <div class="phase-label" style="color: var(--blue);">Phase 3</div>
+        <h3>内定〜承諾</h3>
+        <div class="phase-sub">〜不安の払拭〜</div>
+        <p style="font-size:14px; margin-bottom:12px;"><strong>目的：</strong>待遇・環境など「最後に残る不安」を解消し、入社決断を後押しする</p>
+        <p style="font-size:13px; color:var(--gray-400); margin-bottom:0;"><strong>コンテンツ例：</strong>休日の過ごし方 / ありがとうリレー / オフィスツアー</p>
+      </div>
+    </div>
+
+    <div class="extra-box fade-up" style="margin-top:56px;">
+      <div class="grid-2">
+        <div>
+          <h3 style="font-size:18px;"><span class="new-badge">New</span> 追加との相乗効果</h3>
+          <p style="font-size:15px; margin-bottom:0;">選考が進むたびに新しいコンテンツが追加され「New」バッジが表示される。学生は自然と再訪問し、企業との接点が自動で続きます。</p>
+        </div>
+        <div>
+          <h3 style="font-size:18px;">職種別カスタマイズ対応</h3>
+          <p style="font-size:15px; margin-bottom:0;">営業・技術・事務・専門職など、職種ごとに動画本数・テーマを変更可能。サーベイの属性フィルターで判明した「職種ごとの刺さるポイントの差」を設計に反映します。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     SECTION 07 — Dashboard
+     ======================================== -->
+<section class="dashboard" id="dashboard">
+  <div class="container">
+    <p class="section-label fade-up" style="color: var(--blue);">Dashboard</p>
+    <h2 class="fade-up">4つの分析画面 — 採用の「見える化」</h2>
+    <p class="fade-up" style="max-width:700px; margin-bottom:56px;">「誰が・いつ・何を見たか」が一目で分かる。採用担当者が本当に知りたい情報を、すぐに確認できます。</p>
+
+    <!-- Dashboard 1 -->
+    <div class="dash-item fade-up">
+      <div class="dash-screen">
+        <div>
+          採用状況の全体把握<br>
+          <span style="font-size:12px; opacity:0.7;">スクリーンショット掲載推奨</span>
+        </div>
+      </div>
+      <div class="dash-content">
+        <div class="dash-label">01 全体把握</div>
+        <h3>採用ファネルの「どこで漏れているか」が、一画面で分かります。</h3>
+        <p style="font-size:15px;">認知11名→承諾3名。数字が示す漏れ箇所にピンポイントで手を打てます。カテゴリ別視聴割合で本音と建前のギャップが判明。</p>
+        <ul class="features">
+          <li>フェーズ別学生分布（棒グラフ）</li>
+          <li>カテゴリ別視聴回数（円グラフ）</li>
+          <li>カテゴリ別視聴時間割合</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Dashboard 2 -->
+    <div class="dash-item fade-up">
+      <div class="dash-screen">
+        <div>
+          動画ごとの反応を確認<br>
+          <span style="font-size:12px; opacity:0.7;">スクリーンショット掲載推奨</span>
+        </div>
+      </div>
+      <div class="dash-content">
+        <div class="dash-label">02 動画分析</div>
+        <h3>「刺さっている動画」と「スキップされている動画」を可視化。</h3>
+        <p style="font-size:15px;">新人研修の様子：視聴率32% ／ 人事対談：視聴率2%——この差が来年度の動画改善の根拠。動画タップで「この動画を見た学生は誰か」を逆引き可能。</p>
+        <ul class="features">
+          <li>動画ごとの視聴者数・総視聴回数</li>
+          <li>視聴率・平均視聴時間</li>
+          <li>4軸カテゴリ別分析</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Dashboard 3 -->
+    <div class="dash-item fade-up">
+      <div class="dash-screen">
+        <div>
+          選考段階ごとの学生の動き<br>
+          <span style="font-size:12px; opacity:0.7;">スクリーンショット掲載推奨</span>
+        </div>
+      </div>
+      <div class="dash-content">
+        <div class="dash-label">03 選考段階別</div>
+        <h3>内定フェーズにいる学生が、一本も動画を見ていない。それが辞退のサインです。</h3>
+        <p style="font-size:15px;">視聴が止まった学生・ログイン頻度が落ちた学生をシステムが自動検出。6フェーズをタブで即切替。</p>
+        <ul class="features">
+          <li>フェーズ別学生一覧</li>
+          <li>視聴動画数・視聴回数・視聴時間</li>
+          <li>直近の視聴動画・未視聴アラート</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Dashboard 4 -->
+    <div class="dash-item fade-up">
+      <div class="dash-screen">
+        <div>
+          学生一人ひとりの状況確認<br>
+          <span style="font-size:12px; opacity:0.7;">スクリーンショット掲載推奨</span>
+        </div>
+      </div>
+      <div class="dash-content">
+        <div class="dash-label">04 個別管理</div>
+        <h3>学生一人ひとりの「温度感」が、一覧で把握できます。</h3>
+        <p style="font-size:15px;">視聴時間・視聴回数・説明会前の動画確認状況・フェーズが一画面に集約。URLワンクリック発行・メモ機能付き。</p>
+        <ul class="features">
+          <li>氏名・メール・大学・学部・フェーズ</li>
+          <li>視聴時間・回数・プレエントリー日時</li>
+          <li>ドロップダウンでフェーズ即変更</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="fade-up" style="text-align:center; padding:36px; background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:16px; margin-top:16px;">
+      <p style="font-size:14px; color:var(--gray-400); margin-bottom:0;"><strong style="color:var(--white);">運用工数：週あたり1〜2時間目安。</strong> CSVインポートと画面確認が主な業務。Excelでの手動管理とは、根本的に違います。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     SECTION 08 — Case Studies
+     ======================================== -->
+<section class="cases" id="cases">
+  <div class="container">
+    <p class="section-label fade-up" style="color: var(--purple);">Case Studies</p>
+    <h2 class="fade-up">導入事例（業界別ストーリー型）</h2>
+    <p class="fade-up" style="max-width:700px; margin-bottom:56px;">「うちの業界でも使える」という確信を、具体的な数字でお見せします。</p>
+
+    <div class="grid-2">
+      <!-- Case 1 -->
+      <div class="case-card fade-up stagger-1">
+        <span class="industry-badge" style="background: rgba(59,130,246,0.15); color: var(--blue);">自動車ディーラー</span>
+        <h3>自動車ディーラー（従業員300名規模）</h3>
+        <p style="font-size:14px; margin-bottom:4px;"><strong>課題</strong></p>
+        <p style="font-size:14px;">エントリー後の説明会参加率が低く、選考応募も伸び悩んでいた</p>
+        <p style="font-size:14px; margin-bottom:4px;"><strong>施策</strong></p>
+        <p style="font-size:14px;">採用コンセプト動画をHPとサンクスメールに活用。選考中〜内定期に動画を段階配信</p>
+        <div style="margin-top:24px; padding-top:24px; border-top:1px solid rgba(255,255,255,0.1);">
+          <div class="result-number" style="color: var(--teal);">+15<span style="font-size:20px;">pt</span></div>
+          <div class="result-detail">説明会参加率 25%→40%</div>
+          <div class="result-number" style="color: var(--teal); margin-top:16px;">+19<span style="font-size:20px;">pt</span></div>
+          <div class="result-detail">選考応募率 16%→35%（＋50名）</div>
+        </div>
+      </div>
+
+      <!-- Case 2 -->
+      <div class="case-card fade-up stagger-2">
+        <span class="industry-badge" style="background: rgba(99,102,241,0.15); color: var(--purple);">金融・保険</span>
+        <h3>金融・保険業界（従業員1,000名規模）</h3>
+        <p style="font-size:14px; margin-bottom:4px;"><strong>課題</strong></p>
+        <p style="font-size:14px;">内定辞退率が60%と高く、毎年多大な採用コストが発生していた</p>
+        <p style="font-size:14px; margin-bottom:4px;"><strong>施策</strong></p>
+        <p style="font-size:14px;">内定者向けポータルを開設し、先輩社員動画9本を内定後に段階配信。内定者の不安を払拭</p>
+        <div style="margin-top:24px; padding-top:24px; border-top:1px solid rgba(255,255,255,0.1);">
+          <div class="result-number" style="color: var(--teal);">-30<span style="font-size:20px;">pt</span></div>
+          <div class="result-detail">内定辞退率 60%→30%</div>
+          <div class="result-number" style="color: var(--teal); margin-top:16px;">1,350<span style="font-size:20px;">万円</span></div>
+          <div class="result-detail">コスト削減を達成</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Logo Band -->
+    <div class="logo-band fade-up">
+      <p>導入実績</p>
+      <div class="logos">
+        <span>大手生命保険会社</span>
+        <span>大手金融機関</span>
+        <span>自動車ディーラー</span>
+        <span>大手人材サービス</span>
+        <span>製造業</span>
+      </div>
+      <p style="margin-top:16px; margin-bottom:0; font-size:13px;">他、金融・自動車・製造・サービス業など多業種で導入実績</p>
+    </div>
+  </div>
+</section>
+<!-- ========================================
+     SECTION 09 — Pricing + ROI
+     ======================================== -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <p class="section-label fade-up" style="color: var(--blue);">Pricing &amp; ROI</p>
+    <h2 class="fade-up">料金 ＋ ROI試算</h2>
+    <p class="fade-up" style="max-width:700px; margin-bottom:56px;">「費用」ではなく「投資」として意思決定していただくための情報です。</p>
+
+    <div class="fade-up">
+    <table class="pricing-table">
+      <thead>
+        <tr>
+          <th>項目</th>
+          <th>費用</th>
+          <th>内容</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>採用映像コンテンツ（16本）</td>
+          <td style="font-weight:700;">初回値引き適用</td>
+          <td>企画構成・撮影（3日）・編集一式込み。職種別カスタマイズ対応。二次・三次利用可能。</td>
+        </tr>
+        <tr>
+          <td>システム運用費（月額）</td>
+          <td style="font-weight:700;">5万円〜/月</td>
+          <td>視聴ログ分析システム。学生100〜500名想定。分析画面の閲覧権限含む。</td>
+        </tr>
+        <tr>
+          <td>採用広報サーベイ</td>
+          <td style="font-weight:700; color:var(--teal);">無償提供</td>
+          <td>自社の魅力抽出アンケート。動画企画テーマの策定に使用。社員向けサーベイツール提供。</td>
+        </tr>
+        <tr>
+          <td>合計目安（初回値引き後）</td>
+          <td style="font-weight:700; color:var(--blue); font-size:22px;">230万円〜</td>
+          <td>初回は撮影日集約・共通企画による効率化で大幅値引き適用。</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="roi-section fade-up">
+      <h3>辞退を2人防ぐだけで、投資回収完了。</h3>
+      <div class="roi-big"><span class="counter" data-target="1.5" data-decimal="true">0</span>人分</div>
+      <p style="font-size:15px; color:var(--gray-400);">投資額230万円 ÷ 採用コスト150万円 ≒ 辞退1.5人分を防ぐだけで元が取れる計算</p>
+      <p style="font-size:14px; color:var(--gray-400); font-style:italic;">実績：金融・保険業界の某社で辞退率60%→30%、1,350万円のコスト削減を達成</p>
+    </div>
+
+    <h3 class="fade-up" style="margin-top:56px; text-align:center;">「費用」から「投資」へ——3つの資産価値</h3>
+    <div class="asset-grid">
+      <div class="asset-card fade-up scale-in stagger-1">
+        <h3 style="font-size:16px;">動画は資産</h3>
+        <p style="font-size:14px; margin-bottom:0;">制作した16本は説明会・HP・SNSで何年でも使い続けられます</p>
+      </div>
+      <div class="asset-card fade-up scale-in stagger-2">
+        <h3 style="font-size:16px;">データは資産</h3>
+        <p style="font-size:14px; margin-bottom:0;">視聴ログが蓄積され、翌年の採用戦略の根拠になります</p>
+      </div>
+      <div class="asset-card fade-up scale-in stagger-3">
+        <h3 style="font-size:16px;">成果が可視化</h3>
+        <p style="font-size:14px; margin-bottom:0;">何人が視聴し何人が承諾したかROIを毎年数字で証明できます</p>
+      </div>
+    </div>
+    <p class="fade-up" style="text-align:center; margin-top:28px; font-size:15px; color:var(--gray-400);">媒体費・エージェント費と違い、支払うたびに自社に何かが積み上がります。</p>
+  </div>
+</section>
+
+<!-- ========================================
+     SECTION 10 — Comparison
+     ======================================== -->
+<section class="comparison" id="comparison">
+  <div class="container">
+    <p class="section-label fade-up" style="color: var(--blue);">Comparison</p>
+    <h2 class="fade-up">競合比較（4軸で差別化）</h2>
+    <p class="fade-up" style="max-width:700px; margin-bottom:56px;">「他のツールとは根本的に違う」——その理由を4つの軸で示します。</p>
+
+    <div class="fade-up">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>比較軸</th>
+          <th>従来のインタラクティブ動画ツール</th>
+          <th>REC Insight</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>目的</td>
+          <td>認知拡大・リッチな体験</td>
+          <td>志望度分析・歩留まり改善</td>
+        </tr>
+        <tr>
+          <td>機能</td>
+          <td>多機能・演出重視</td>
+          <td>視聴ログ分析特化 ＋ 未視聴アラート自動抽出</td>
+        </tr>
+        <tr>
+          <td>初期費用</td>
+          <td>数百万円規模のシステム導入費＋制作費</td>
+          <td>圧倒的低コスト（動画制作費中心の料金体系）</td>
+        </tr>
+        <tr>
+          <td>運用負荷</td>
+          <td>複雑なシナリオ設計・継続的な運用保守が発生</td>
+          <td>CSVのみ。週1〜2時間で完結。専門知識不要。</td>
+        </tr>
+        <tr>
+          <td>データ資産</td>
+          <td>データは外部サービスに蓄積。自社に残らない。</td>
+          <td>すべてのデータが自社に蓄積。翌年に活用できる。</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     SECTION 11 — Onboarding
+     ======================================== -->
+<section class="onboarding" id="onboarding">
+  <div class="container">
+    <p class="section-label fade-up" style="color: var(--blue);">Getting Started</p>
+    <h2 class="fade-up">かんたん3ステップ ＋ 導入スケジュール</h2>
+    <p class="fade-up" style="max-width:700px; margin-bottom:56px;">「すぐ動ける・採用シーズンに間に合う」導入フロー。</p>
+
+    <div class="grid-3">
+      <div class="step-card fade-up scale-in stagger-1">
+        <div class="step-num">01</div>
+        <h3>CSV取込・リンク送信</h3>
+        <p style="font-size:14px; margin-bottom:0;">ATSから学生データをCSVで出力しREC Insightに取込。専用の視聴用リンクをメールやLINE等で一括送信。</p>
+      </div>
+      <div class="step-card fade-up scale-in stagger-2">
+        <div class="step-num">02</div>
+        <h3>スマホ視聴・アンケート</h3>
+        <p style="font-size:14px; margin-bottom:0;">学生はスマホでスキマ時間にショート動画を視聴。視聴直後のアンケートで興味や温度感をリアルタイムに回収。</p>
+      </div>
+      <div class="step-card fade-up scale-in stagger-3">
+        <div class="step-num">03</div>
+        <h3>ログ確認・ATS連携</h3>
+        <p style="font-size:14px; margin-bottom:0;">人事担当者は管理画面で視聴ログを確認。ATSの情報と併せて面接官へ共有し、面接時の話題作りや見極めに活用。</p>
+      </div>
+    </div>
+
+    <h3 class="fade-up" style="margin-top:72px; margin-bottom:28px;">導入スケジュール（最短1.5ヶ月）</h3>
+    <ul class="timeline">
+      <li class="fade-up stagger-1">
+        <span class="week">WEEK 1</span>
+        <span class="desc"><strong>要件定義：</strong>採用課題のヒアリング ／ ターゲット学生の設定 ／ 動画テーマの策定 ／ KPI・KGIの設計</span>
+      </li>
+      <li class="fade-up stagger-2">
+        <span class="week">WEEK 2〜3</span>
+        <span class="desc"><strong>動画制作・設定：</strong>構成案の作成・確認 ／ 撮影（1〜2日程度）／ 動画編集・プレビュー ／ システム初期設定</span>
+      </li>
+      <li class="fade-up stagger-3">
+        <span class="week">WEEK 4〜5</span>
+        <span class="desc"><strong>配信準備：</strong>学生リスト（CSV）連携 ／ 配信メール文面の作成 ／ システム操作レクチャー ／ テスト配信・動作確認</span>
+      </li>
+      <li class="fade-up stagger-4">
+        <span class="week">WEEK 6〜</span>
+        <span class="desc"><strong>運用開始：</strong>本番配信スタート ／ 視聴データの回収 ／ 分析レポート共有 ／ 定例会（月1回）の開始</span>
+      </li>
+    </ul>
+
+    <p class="fade-up" style="margin-top:36px; font-size:15px; color:var(--gray-400); font-style:italic;">採用シーズンに間に合うか不安な場合は、まずヒアリングでスケジュールをご確認ください。貴社の採用スケジュールに合わせて柔軟に調整いたします。</p>
+  </div>
+</section>
+
+<!-- ========================================
+     SECTION 12 — FAQ
+     ======================================== -->
+<section class="faq" id="faq">
+  <div class="container">
+    <p class="section-label fade-up" style="color: var(--gray-400);">FAQ</p>
+    <h2 class="fade-up">よくある質問</h2>
+    <p class="fade-up" style="max-width:700px; margin-bottom:56px;">CTAへの最後の障壁をすべて取り除きます。</p>
+
+    <details class="faq-item fade-up">
+      <summary>動画制作費は本当に込みですか？</summary>
+      <div class="answer">はい。企画・撮影（3日）・編集まで一式含まれています。別途発生する費用はシステム月額のみです。初回値引き適用で動画16本＋年間システム費が230万円〜になります。</div>
+    </details>
+
+    <details class="faq-item fade-up">
+      <summary>週にどれくらいの運用時間が必要ですか？</summary>
+      <div class="answer">目安は週1〜2時間程度です。CSVインポートと画面確認が主な業務。未視聴者リストの一括出力で個別フォローも効率化できます。</div>
+    </details>
+
+    <details class="faq-item fade-up">
+      <summary>既存の採用管理システム（ATS）と連携できますか？</summary>
+      <div class="answer">対応可能です。CSVでの学生データ連携に加え、主要ATSとのAPI連携もご相談いただけます。</div>
+    </details>
+
+    <details class="faq-item fade-up">
+      <summary>申し込みから運用開始まで最短でどれくらいですか？</summary>
+      <div class="answer">最短1.5ヶ月（約6週間）です。採用シーズンに間に合うか不安な場合は、まずヒアリングでスケジュールをご確認ください。</div>
+    </details>
+
+    <details class="faq-item fade-up">
+      <summary>媒体掲載やエージェントとの併用はできますか？</summary>
+      <div class="answer">もちろんです。REC Insightは既存の採用チャネルを置き換えるものではなく、そこで集めた学生への魅力づけとデータ蓄積を担います。媒体・エージェント経由の学生にもそのままご活用いただけます。</div>
+    </details>
+  </div>
+</section>
+
+<!-- ========================================
+     SECTION 13 — Company
+     ======================================== -->
+<section class="company-section" id="company">
+  <div class="container">
+    <p class="section-label fade-up" style="color: var(--navy);">Company</p>
+    <h2 class="fade-up">DX × 映像、両方できるから、<br>採用課題を丸ごと解決できる。</h2>
+    <p class="fade-up" style="max-width:700px; margin-bottom:56px;">慶應・東大出身エンジニア × 映像クリエイターチームが、システム開発から動画制作まで一気通貫で担当。</p>
+
+    <div class="company-grid">
+      <div class="fade-left">
+        <h3 style="font-size:18px; margin-bottom:28px;">会社概要</h3>
+        <table class="company-info">
+          <tr><td>商号</td><td>株式会社R&amp;D</td></tr>
+          <tr><td>代表</td><td>代表取締役社長 伊藤博隆</td></tr>
+          <tr><td>設立</td><td>2020年10月20日</td></tr>
+          <tr><td>拠点</td><td>東京都港区南青山5-4-27</td></tr>
+          <tr><td>Webサイト</td><td><a href="https://randd-inc.com" style="color:var(--blue); text-decoration:none;">randd-inc.com</a></td></tr>
+          <tr><td>事業内容</td><td>アプリケーション開発 ／ DX・AIコンサルティング ／ 映像コンテンツ作成</td></tr>
+        </table>
+      </div>
+      <div class="fade-right">
+        <h3 style="font-size:18px; margin-bottom:28px;">信頼性・実績</h3>
+        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-bottom:24px;">
+          <div class="card" style="text-align:center; padding:28px;">
+            <div class="kpi-number" style="font-size:40px; color:var(--blue);"><span class="counter" data-target="20">0</span><span style="font-size:16px;">社以上</span></div>
+            <p style="font-size:13px; color:var(--gray-400); margin-bottom:0;">累計支援企業</p>
+          </div>
+          <div class="card" style="text-align:center; padding:28px;">
+            <div class="kpi-number" style="font-size:40px; color:var(--blue);"><span class="counter" data-target="100">0</span><span style="font-size:16px;">件超</span></div>
+            <p style="font-size:13px; color:var(--gray-400); margin-bottom:0;">支援実績</p>
+          </div>
+          <div class="card" style="text-align:center; padding:28px;">
+            <div class="kpi-number" style="font-size:40px; color:var(--blue);"><span class="counter" data-target="2020">0</span><span style="font-size:16px;">年</span></div>
+            <p style="font-size:13px; color:var(--gray-400); margin-bottom:0;">設立</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="logo-band fade-up" style="margin-top:56px;">
+      <p>開発支援・コンテンツ制作 導入実績</p>
+      <div class="logos">
+        <span>大手航空会社</span>
+        <span>大手生命保険会社</span>
+        <span>大手スポーツブランド</span>
+        <span>大手アパレルブランド</span>
+        <span>大手レジャー施設</span>
+        <span>大手自動車部品メーカー</span>
+        <span>大手不動産会社</span>
+        <span>医療系学術団体</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     SECTION 14 — Final CTA
+     ======================================== -->
+<section class="final-cta" id="final-cta">
+  <div class="container">
+    <p class="section-label fade-up" style="color: rgba(255,255,255,0.7);">Get Started</p>
+    <h2 class="fade-up">貴社の採用課題、<br>30分で整理します。</h2>
+    <p class="fade-up">「どの動画を作るべきか」「うちの規模・業種に合うか」——<br>ご相談後、課題に合わせた活用プランをご提案します。<br>資料送付のみのご対応も可能です。</p>
+    <div class="cta-buttons fade-up">
+      <a href="#" class="btn-white-outline">資料をダウンロードする</a>
+      <a href="#" class="btn-white">まずは無料で相談する</a>
+      <a href="#" class="btn-white-outline">採用シーズンに間に合うか確認する</a>
+    </div>
+    <p class="final-note fade-up">しつこい営業はしません。ご相談のみで終了も歓迎です。</p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p>&copy; 2026 株式会社R&amp;D ／ REC Insight</p>
+  </div>
+</footer>
+<!-- ========================================
+     JavaScript — Animations & Interactivity
+     ======================================== -->
+<script>
+(function() {
+  'use strict';
+
+  // --- Scroll Progress Bar ---
+  var progressBar = document.getElementById('scrollProgress');
+  function updateProgress() {
+    var scrollTop = window.scrollY;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    if (docHeight > 0) {
+      progressBar.style.width = (scrollTop / docHeight) * 100 + '%';
+    }
+  }
+
+  // --- Navbar scroll effect ---
+  var navbar = document.getElementById('navbar');
+  function updateNavbar() {
+    if (window.scrollY > 100) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  }
+
+  // --- Combined scroll handler (throttled via rAF) ---
+  var ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        updateProgress();
+        updateNavbar();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  // --- Hero counters: set final value immediately (no animation in hero) ---
+  document.querySelectorAll('.hero .counter').forEach(function(el) {
+    var target = el.dataset.target;
+    var isDecimal = el.dataset.decimal === 'true';
+    var hasSeparator = el.dataset.separator === 'true';
+    el.dataset.animated = 'true';
+    if (isDecimal) {
+      el.textContent = parseFloat(target).toFixed(1);
+    } else if (hasSeparator) {
+      el.textContent = parseInt(target).toLocaleString();
+    } else {
+      el.textContent = target;
+    }
+  });
+
+  // --- Intersection Observer for scroll fade-in ---
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+
+        // Trigger counter animation for counters inside this element
+        var counters = entry.target.querySelectorAll('.counter');
+        counters.forEach(function(counter) {
+          if (counter.dataset.animated) return;
+          counter.dataset.animated = 'true';
+          animateCounter(counter);
+        });
+
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.fade-up, .fade-left, .fade-right, .scale-in').forEach(function(el) {
+    observer.observe(el);
+  });
+
+  // --- Counter Animation ---
+  function animateCounter(el) {
+    var target = parseFloat(el.dataset.target);
+    var isDecimal = el.dataset.decimal === 'true';
+    var hasSeparator = el.dataset.separator === 'true';
+    var duration = 2000;
+    var start = performance.now();
+
+    function easeOutExpo(t) {
+      return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+    }
+
+    function update(now) {
+      var elapsed = now - start;
+      var progress = Math.min(elapsed / duration, 1);
+      var eased = easeOutExpo(progress);
+      var current = eased * target;
+
+      if (isDecimal) {
+        el.textContent = current.toFixed(1);
+      } else if (hasSeparator) {
+        el.textContent = Math.floor(current).toLocaleString();
+      } else {
+        el.textContent = Math.floor(current);
+      }
+
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      }
+    }
+
+    requestAnimationFrame(update);
+  }
+
+  // --- Mobile nav toggle ---
+  var navToggle = document.getElementById('navToggle');
+  var navMenu = document.querySelector('.navbar-nav');
+  if (navToggle && navMenu) {
+    navToggle.addEventListener('click', function() {
+      navToggle.classList.toggle('active');
+      navMenu.classList.toggle('open');
+    });
+  }
+
+  // --- Smooth scroll for anchor links ---
+  document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+    anchor.addEventListener('click', function(e) {
+      var href = this.getAttribute('href');
+      if (href === '#') return;
+      e.preventDefault();
+      var target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (navToggle && navMenu) {
+          navToggle.classList.remove('active');
+          navMenu.classList.remove('open');
+        }
+      }
+    });
+  });
+
+})();
+</script>
+
+</body>
+</html>
