@@ -23,7 +23,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Murecho:wght@400;500;700;900&family=IBM+Plex+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;500;700;900&family=Shippori+Mincho:wght@400;500;700;900&family=M+PLUS+1p:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
 
 <style>
 /* ============================================================
@@ -3016,6 +3016,157 @@ footer .meta { font-size: 11px; }
   .section-title .lead::before, .section-title .lead::after { width: 22px; }
   .what-head h2, .comms h2, .benefits-side h2, .final h2 { font-size: 22px; }
 }
+
+/* ============================================================
+   Contact Modal（お問い合わせ → Slack通知）
+   ============================================================ */
+.contact-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.contact-overlay.is-open { display: flex; }
+.contact-modal {
+  background: var(--c-bg);
+  border-radius: var(--r-card);
+  box-shadow: 0 24px 64px -16px rgba(15, 23, 42, 0.35);
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 36px 32px 32px;
+  position: relative;
+}
+.contact-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: var(--c-bg-soft);
+  border: 1px solid var(--c-line);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--c-muted-2);
+  cursor: pointer;
+}
+.contact-close:hover { background: var(--c-bg-blue); color: var(--c-ink); }
+.contact-modal h3 {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--c-ink);
+  margin-bottom: 6px;
+}
+.contact-modal .contact-lead {
+  font-size: 13px;
+  color: var(--c-muted);
+  margin-bottom: 24px;
+  line-height: 1.7;
+}
+.contact-field { margin-bottom: 16px; }
+.contact-field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--c-ink-2);
+  margin-bottom: 6px;
+}
+.contact-field label .req {
+  color: #dc2626;
+  font-size: 11px;
+  margin-left: 4px;
+}
+.contact-field input,
+.contact-field select,
+.contact-field textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid var(--c-line);
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: var(--font-jp);
+  color: var(--c-ink);
+  background: var(--c-bg);
+}
+.contact-field input:focus,
+.contact-field select:focus,
+.contact-field textarea:focus {
+  outline: none;
+  border-color: var(--c-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+.contact-field textarea { resize: vertical; min-height: 88px; }
+.contact-submit {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(180deg, #2f7bf3, var(--c-primary-d));
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: var(--font-jp);
+  cursor: pointer;
+  margin-top: 6px;
+}
+.contact-submit:hover { filter: brightness(1.06); }
+.contact-submit:disabled { opacity: 0.6; cursor: wait; }
+.contact-privacy {
+  font-size: 11px;
+  color: var(--c-muted-2);
+  margin-top: 12px;
+  line-height: 1.7;
+  text-align: center;
+}
+.contact-success {
+  display: none;
+  text-align: center;
+  padding: 32px 8px;
+}
+.contact-success.is-show { display: block; }
+.contact-success .ok-mark {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--c-bg-blue);
+  color: var(--c-primary);
+  font-size: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+.contact-success h4 {
+  font-size: 19px;
+  color: var(--c-ink);
+  margin-bottom: 10px;
+}
+.contact-success p {
+  font-size: 14px;
+  color: var(--c-muted);
+  line-height: 1.8;
+}
+.contact-error {
+  display: none;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  font-size: 13px;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+.contact-error.is-show { display: block; }
+@media (max-width: 480px) {
+  .contact-modal { padding: 30px 22px 24px; }
+}
 </style>
 </head>
 <body>
@@ -3062,8 +3213,8 @@ footer .meta { font-size: 11px; }
       <a href="#pricing">料金</a>
     </div>
     <div class="nav-cta">
-      <a href="#final" class="btn btn-outline">資料DL</a>
-      <a href="#final" class="btn btn-primary">無料で相談する</a>
+      <a href="#final" class="btn btn-outline" data-contact-type="資料請求">資料DL</a>
+      <a href="#final" class="btn btn-primary" data-contact-type="無料相談">無料で相談する</a>
     </div>
   </div>
 </nav>
@@ -3097,8 +3248,8 @@ footer .meta { font-size: 11px; }
         採用の歩留まりを最大化。
       </p>
       <div class="hero-cta">
-        <a href="#final" class="btn btn-primary">資料をダウンロードする</a>
-        <a href="#final" class="btn btn-outline">無料で相談する</a>
+        <a href="#final" class="btn btn-primary" data-contact-type="資料請求">資料をダウンロードする</a>
+        <a href="#final" class="btn btn-outline" data-contact-type="無料相談">無料で相談する</a>
       </div>
 
 
@@ -3952,7 +4103,7 @@ footer .meta { font-size: 11px; }
             お客様の予算感（<strong>約200万円</strong>）に合わせた<br>
             初期費用のディスカウントや、テスト導入プランの調整も可能です。
           </p>
-          <a href="#final" class="pca-budget-btn">無料で相談する <span class="arr">›</span></a>
+          <a href="#final" class="pca-budget-btn" data-contact-type="無料相談">無料で相談する <span class="arr">›</span></a>
         </div>
       </div>
     </div>
@@ -3980,11 +4131,63 @@ footer .meta { font-size: 11px; }
       導入のご相談・資料請求はいつでもお気軽にどうぞ。
     </p>
     <div class="final-cta">
-      <a href="#" class="btn-white">資料をダウンロードする</a>
-      <a href="#" class="btn-ghost">無料で相談する</a>
+      <a href="#" class="btn-white" data-contact-type="資料請求">資料をダウンロードする</a>
+      <a href="#" class="btn-ghost" data-contact-type="無料相談">無料で相談する</a>
     </div>
   </div>
 </section>
+
+<!-- ============================================================
+     CONTACT MODAL（送信内容はSlackに通知されます）
+     ============================================================ -->
+<div class="contact-overlay" id="contactOverlay" role="dialog" aria-modal="true" aria-labelledby="contactTitle">
+  <div class="contact-modal">
+    <button type="button" class="contact-close" id="contactClose" aria-label="閉じる">×</button>
+
+    <div id="contactFormWrap">
+      <h3 id="contactTitle">無料相談・資料請求</h3>
+      <p class="contact-lead">1営業日以内に担当者よりご連絡いたします。<br>しつこい営業は行いません。ご相談のみで終了も歓迎です。</p>
+
+      <div class="contact-error" id="contactError">送信に失敗しました。お手数ですが時間をおいて再度お試しいただくか、メールにてご連絡ください。</div>
+
+      <form id="contactForm" novalidate>
+        <div class="contact-field">
+          <label for="cfType">ご相談内容<span class="req">必須</span></label>
+          <select id="cfType" name="type" required>
+            <option value="無料相談">無料相談（30分）を希望する</option>
+            <option value="資料請求">資料をダウンロードしたい</option>
+            <option value="スケジュール確認">採用シーズンに間に合うか確認したい</option>
+            <option value="その他">その他のお問い合わせ</option>
+          </select>
+        </div>
+        <div class="contact-field">
+          <label for="cfName">お名前<span class="req">必須</span></label>
+          <input type="text" id="cfName" name="name" required autocomplete="name" placeholder="山田 太郎">
+        </div>
+        <div class="contact-field">
+          <label for="cfCompany">会社名</label>
+          <input type="text" id="cfCompany" name="company" autocomplete="organization" placeholder="株式会社〇〇">
+        </div>
+        <div class="contact-field">
+          <label for="cfEmail">メールアドレス<span class="req">必須</span></label>
+          <input type="email" id="cfEmail" name="email" required autocomplete="email" placeholder="taro@example.co.jp">
+        </div>
+        <div class="contact-field">
+          <label for="cfMessage">ご質問・ご要望（任意）</label>
+          <textarea id="cfMessage" name="message" placeholder="例：新卒採用で内定辞退が多く困っています。来年度のシーズンに間に合うか知りたいです。"></textarea>
+        </div>
+        <button type="submit" class="contact-submit" id="contactSubmit">送信する</button>
+        <p class="contact-privacy">ご入力いただいた情報は、お問い合わせへの対応のみに使用します。</p>
+      </form>
+    </div>
+
+    <div class="contact-success" id="contactSuccess">
+      <span class="ok-mark">✓</span>
+      <h4>送信が完了しました</h4>
+      <p>お問い合わせありがとうございます。<br>1営業日以内に担当者よりご連絡いたします。</p>
+    </div>
+  </div>
+</div>
 
 <footer>
   <div class="container">
@@ -3994,6 +4197,149 @@ footer .meta { font-size: 11px; }
 </footer>
 
 <script>
+// ============================================================
+// Contact Modal + Slack通知
+//
+// 【セットアップ手順】
+// 1. Slackで通知を受け取りたいチャンネルを用意（例: #lp-お問い合わせ）
+// 2. https://api.slack.com/apps → Create New App → From scratch
+// 3. 左メニュー「Incoming Webhooks」→ ON → Add New Webhook to Workspace
+//    → チャンネルを選択 → 発行された URL をコピー
+// 4. 下の SLACK_WEBHOOK_URL に貼り付けてコミット
+//
+// 注意: 静的サイトのためWebhook URLはページソースから閲覧可能です。
+// 通知専用チャンネルで運用し、万一スパムが来たらWebhookを再発行してください。
+// 将来的にはCloudflare Workers等の無料サーバレス経由に移行するとURLを秘匿できます。
+// ============================================================
+(function(){
+  var SLACK_WEBHOOK_URL = ''; // ← ここにSlack Incoming WebhookのURLを貼り付け
+  var FALLBACK_EMAIL = 'sales@randd-inc.com'; // Webhook未設定時はメール作成画面を開く
+
+  var overlay = document.getElementById('contactOverlay');
+  var closeBtn = document.getElementById('contactClose');
+  var form = document.getElementById('contactForm');
+  var formWrap = document.getElementById('contactFormWrap');
+  var successBox = document.getElementById('contactSuccess');
+  var errorBox = document.getElementById('contactError');
+  var submitBtn = document.getElementById('contactSubmit');
+  var typeSelect = document.getElementById('cfType');
+  var lastFocused = null;
+
+  function openModal(presetType) {
+    lastFocused = document.activeElement;
+    if (presetType) {
+      for (var i = 0; i < typeSelect.options.length; i++) {
+        if (typeSelect.options[i].value === presetType) {
+          typeSelect.selectedIndex = i;
+          break;
+        }
+      }
+    }
+    formWrap.style.display = '';
+    successBox.classList.remove('is-show');
+    errorBox.classList.remove('is-show');
+    overlay.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('cfName').focus();
+  }
+
+  function closeModal() {
+    overlay.classList.remove('is-open');
+    document.body.style.overflow = '';
+    if (lastFocused) lastFocused.focus();
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeModal();
+  });
+
+  // CTAボタンをモーダルに配線（data-contact-type で種別をプリセット）
+  document.querySelectorAll('[data-contact-type]').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      openModal(btn.getAttribute('data-contact-type'));
+    });
+  });
+
+  // 送信処理
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    errorBox.classList.remove('is-show');
+
+    var name = document.getElementById('cfName').value.trim();
+    var email = document.getElementById('cfEmail').value.trim();
+    if (!name || !email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      errorBox.textContent = 'お名前と正しいメールアドレスを入力してください。';
+      errorBox.classList.add('is-show');
+      return;
+    }
+
+    var company = document.getElementById('cfCompany').value.trim();
+    var message = document.getElementById('cfMessage').value.trim();
+    var type = typeSelect.value;
+
+    // Webhook未設定時はメールにフォールバック
+    if (!SLACK_WEBHOOK_URL) {
+      var subject = '【REC Insight LP】' + type + '：' + name + ' 様';
+      var body = 'ご相談内容: ' + type + '\nお名前: ' + name + '\n会社名: ' + (company || '未記入') + '\nメール: ' + email + '\n\n' + (message || '（メッセージなし）');
+      location.href = 'mailto:' + FALLBACK_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+      formWrap.style.display = 'none';
+      successBox.classList.add('is-show');
+      return;
+    }
+
+    var payload = {
+      text: '📩 LPからお問い合わせがありました',
+      blocks: [
+        {
+          type: 'header',
+          text: { type: 'plain_text', text: '📩 LPからお問い合わせ', emoji: true }
+        },
+        {
+          type: 'section',
+          fields: [
+            { type: 'mrkdwn', text: '*ご相談内容:*\n' + type },
+            { type: 'mrkdwn', text: '*お名前:*\n' + name },
+            { type: 'mrkdwn', text: '*会社名:*\n' + (company || '未記入') },
+            { type: 'mrkdwn', text: '*メール:*\n' + email }
+          ]
+        }
+      ]
+    };
+    if (message) {
+      payload.blocks.push({
+        type: 'section',
+        text: { type: 'mrkdwn', text: '*メッセージ:*\n' + message }
+      });
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = '送信中…';
+
+    // Slack Incoming WebhookはCORSヘッダを返さないため no-cors で送信
+    // （レスポンスは読めないが送信自体は成功する）
+    fetch(SLACK_WEBHOOK_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(payload)
+    }).then(function() {
+      formWrap.style.display = 'none';
+      successBox.classList.add('is-show');
+    }).catch(function() {
+      errorBox.textContent = '送信に失敗しました。お手数ですが ' + FALLBACK_EMAIL + ' までメールでご連絡ください。';
+      errorBox.classList.add('is-show');
+    }).finally(function() {
+      submitBtn.disabled = false;
+      submitBtn.textContent = '送信する';
+    });
+  });
+})();
+
 // Reveal on scroll
 (function(){
   const els = document.querySelectorAll('.reveal');
@@ -4148,10 +4494,20 @@ footer .meta { font-size: 11px; }
   }
 
   const panel = document.getElementById('font-tweaks');
+  // 切替候補フォントはパネル起動時にのみ遅延ロード（通常訪問者の転送量を削減）
+  let tweakFontsLoaded = false;
+  function loadTweakFonts() {
+    if (tweakFontsLoaded) return;
+    tweakFontsLoaded = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Murecho:wght@400;500;700;900&family=IBM+Plex+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;500;700;900&family=Shippori+Mincho:wght@400;500;700;900&family=M+PLUS+1p:wght@400;500;700;900&display=swap';
+    document.head.appendChild(link);
+  }
   // ホストの編集モードと連動
   window.addEventListener('message', (e) => {
     const t = e.data && e.data.type;
-    if (t === '__activate_edit_mode') panel.classList.add('is-open');
+    if (t === '__activate_edit_mode') { loadTweakFonts(); panel.classList.add('is-open'); }
     if (t === '__deactivate_edit_mode') panel.classList.remove('is-open');
   });
   // 閉じるボタン
@@ -4164,9 +4520,10 @@ footer .meta { font-size: 11px; }
     btn.addEventListener('click', () => applyPreset(btn.dataset.preset));
   });
 
-  // 初期復元
+  // 初期復元（default以外が保存されている場合のみ追加フォントをロード）
   let initial = 'default';
   try { initial = localStorage.getItem('rec-font-preset') || 'default'; } catch (e) {}
+  if (initial !== 'default') loadTweakFonts();
   applyPreset(initial);
 
   // ホストにTweaks利用可能であることを通知
