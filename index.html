@@ -14,7 +14,11 @@
 <meta property="og:description" content="ショート動画と行動分析のハイブリッドソリューション。学生の本音を可視化し、選考・内定承諾率を向上させます。">
 <meta property="og:site_name" content="REC Insight">
 <meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://randd-creative.com/assets/hero_cluster.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://randd-creative.com/assets/hero_cluster.png">
 
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -875,9 +879,51 @@ ul { list-style: none; }
 .nav-links a:hover { color: var(--c-primary); }
 .nav-cta { display: flex; gap: 10px; }
 .nav-cta .btn { padding: 9px 18px; font-size: 13px; }
+
+/* Hamburger toggle */
+.nav-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  flex-direction: column;
+  gap: 5px;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--c-ink);
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+.nav-hamburger.is-open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.nav-hamburger.is-open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.is-open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
 @media (max-width: 880px) {
-  .nav-links { display: none; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: rgba(255,255,255,0.98);
+    flex-direction: column;
+    padding: 16px 28px 20px;
+    gap: 0;
+    border-bottom: 1px solid var(--c-line-soft);
+    box-shadow: 0 8px 24px -8px rgba(15, 23, 42, 0.12);
+  }
+  .nav-links.is-open { display: flex; }
+  .nav-links a {
+    padding: 14px 0;
+    font-size: 15px;
+    border-bottom: 1px solid var(--c-line-soft);
+  }
   .nav-cta .btn-outline { display: none; }
+  .nav-hamburger { display: flex; }
 }
 
 /* ============================================================
@@ -3006,6 +3052,18 @@ footer .meta { font-size: 11px; }
 }
 .reveal.in { opacity: 1 !important; transform: translateY(0) !important; }
 
+/* Reduced motion: skip all animations */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .reveal.in { transition: none; }
+}
+
+/* Focus visible */
+:focus-visible {
+  outline: 2px solid var(--c-primary);
+  outline-offset: 2px;
+}
+
 /* ============================================================
    Responsive small screens
    ============================================================ */
@@ -3216,6 +3274,7 @@ footer .meta { font-size: 11px; }
       <a href="#final" class="btn btn-outline" data-contact-type="資料請求">資料DL</a>
       <a href="#final" class="btn btn-primary" data-contact-type="無料相談">無料で相談する</a>
     </div>
+    <button class="nav-hamburger" id="navHamburger" aria-label="メニュー"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
@@ -3298,14 +3357,14 @@ footer .meta { font-size: 11px; }
      ============================================================ -->
 <section class="logo-strip">
   <div class="container">
-    <p class="logo-strip-label">先進企業の採用広報DXを支援</p>
+    <p class="logo-strip-label">多業種の採用DXを支援</p>
     <div class="logo-strip-grid">
-      <div class="logo-ph">COMPANY A</div>
-      <div class="logo-ph">COMPANY B</div>
-      <div class="logo-ph">COMPANY C</div>
-      <div class="logo-ph">COMPANY D</div>
-      <div class="logo-ph">COMPANY E</div>
-      <div class="logo-ph">COMPANY F</div>
+      <div class="logo-ph">大手生命保険</div>
+      <div class="logo-ph">大手金融機関</div>
+      <div class="logo-ph">自動車ディーラー</div>
+      <div class="logo-ph">大手人材サービス</div>
+      <div class="logo-ph">大手製造業</div>
+      <div class="logo-ph">大手不動産</div>
     </div>
   </div>
 </section>
@@ -4256,6 +4315,22 @@ footer .meta { font-size: 11px; }
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeModal();
   });
+
+  // Mobile hamburger menu
+  var hamburger = document.getElementById('navHamburger');
+  var navLinks = document.querySelector('.nav-links');
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', function() {
+      hamburger.classList.toggle('is-open');
+      navLinks.classList.toggle('is-open');
+    });
+    navLinks.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        hamburger.classList.remove('is-open');
+        navLinks.classList.remove('is-open');
+      });
+    });
+  }
 
   // CTAボタンをモーダルに配線（data-contact-type で種別をプリセット）
   document.querySelectorAll('[data-contact-type]').forEach(function(btn) {
